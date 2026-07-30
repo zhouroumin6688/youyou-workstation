@@ -1700,7 +1700,7 @@ function openEngModal(idx) {
     inner += data.questions.map((q,i) => `
       <div class="card" style="margin-bottom:8px;">
         <div style="font-size:14px;font-weight:600;margin-bottom:8px;">Q${i+1}. ${q.q}</div>
-        ${q.opts.map(o => `<div class="question-opt" onclick="showToast('${o===q.a ? \"✅ 正确！\" : \"❌ 正确答案是：\"+q.a}')"><span class="opt-letter">${String.fromCharCode(65+data.questions[0].opts.indexOf(o))}</span> ${o}</div>`).join('')}
+        ${q.opts.map(o => `<div class="question-opt" onclick="showToast('${o===q.a ? '✅ 正确！' : '❌ 正确答案是：'+q.a}')"><span class="opt-letter">${String.fromCharCode(65+data.questions[0].opts.indexOf(o))}</span> ${o}</div>`).join('')}
       </div>
     `).join('');
   } else if (idx === 3) {
@@ -1724,7 +1724,7 @@ function openEngModal(idx) {
         <div style="font-size:14px;font-weight:700;margin-bottom:6px;">📖 ${p.title}</div>
         <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;">${p.content}</div>
         <div style="font-size:13px;font-weight:600;margin-bottom:4px;">❓ ${p.q}</div>
-        <div class="question-opt" onclick="showToast('${p.a === \"正确答案\" ? \"✅ 正确！\" : \"✅ 正确答案：\" + p.a}')"><span class="opt-letter">A</span> ${p.a}</div>
+        <div class="question-opt" onclick="showToast('${p.a === '正确答案' ? '✅ 正确！' : '✅ 正确答案：' + p.a}')"><span class="opt-letter">A</span> ${p.a}</div>
       </div>
     `).join('');
   }
