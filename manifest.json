@@ -1,0 +1,41 @@
+{
+  "name": "柚柚柚工作台",
+  "short_name": "柚柚柚",
+  "description": "柚柚柚的自律生活管理工作台 - Hello Kitty Edition",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#fff0f5",
+  "theme_color": "#ff6b9d",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "categories": ["productivity", "lifestyle"],
+  "icons": [
+    {
+      "src": "icons/A_cute_3D_cartoon_Hello_Kitty__2026-07-29T14-43-49.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/A_cute_3D_cartoon_Hello_Kitty__2026-07-29T14-43-49.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/A_cute_3D_cartoon_Hello_Kitty__2026-07-29T14-43-49.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/A_cute_3D_cartoon_Hello_Kitty__2026-07-29T14-43-49.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
