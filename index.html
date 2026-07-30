@@ -535,6 +535,103 @@
     from { opacity: 0; transform: translateX(-50%) translateY(20px); }
     to { opacity: 1; transform: translateX(-50%) translateY(0); }
   }
+
+  /* ===== 弹窗 ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 998;
+    display: flex; align-items: flex-end; justify-content: center;
+    animation: fadeIn 0.3s ease; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal-sheet {
+    background: #fff; width: 100%; max-width: 430px; max-height: 85dvh;
+    border-radius: 24px 24px 0 0; padding: 24px 18px calc(var(--safe-area-bottom) + 20px);
+    animation: slideUp 0.35s cubic-bezier(0.16,1,0.3,1);
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .modal-sheet::-webkit-scrollbar { width: 0; }
+  .modal-handle { width: 36px; height: 4px; background: #e0d0d8; border-radius: 2px; margin: 0 auto 16px; }
+  .modal-close {
+    position: absolute; top: 18px; right: 18px; width: 32px; height: 32px;
+    background: #f5f0f3; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 18px; color: var(--text-secondary); z-index: 1;
+  }
+  .modal-title { font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+  .modal-subtitle { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+
+  /* 视频容器 */
+  .video-container {
+    position: relative; border-radius: 16px; overflow: hidden; margin-bottom: 16px;
+    background: linear-gradient(135deg, #ffb6c1, #ff8fab);
+    aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;
+  }
+  .video-container .play-btn {
+    width: 64px; height: 64px; background: rgba(255,255,255,0.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 28px;
+    cursor: pointer; box-shadow: 0 4px 16px rgba(255,107,157,0.4); transition: transform 0.2s;
+  }
+  .video-container .play-btn:active { transform: scale(0.9); }
+  .video-container .vid-title {
+    position: absolute; bottom: 12px; left: 16px; color: #fff; font-weight: 700;
+    font-size: 14px; text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .video-container .vid-duration {
+    position: absolute; bottom: 12px; right: 16px; color: #fff;
+    background: rgba(0,0,0,0.4); padding: 3px 8px; border-radius: 8px;
+    font-size: 11px; font-weight: 600;
+  }
+
+  /* 训练计时器 */
+  .timer-circle {
+    width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 16px;
+    border: 4px solid var(--primary); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; transition: border-color 0.3s;
+  }
+  .timer-circle.active { border-color: var(--primary-dark); }
+  .timer-circle .timer-num { font-size: 28px; font-weight: 800; color: var(--text-main); }
+  .timer-circle .timer-label { font-size: 11px; color: var(--text-secondary); }
+
+  /* 雅思闪卡 */
+  .flashcard {
+    background: linear-gradient(135deg, #fff5f8, #fff); border: 2px solid var(--border);
+    border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 12px;
+    cursor: pointer; min-height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: all 0.3s; user-select: none;
+  }
+  .flashcard.flipped { background: var(--primary-light); border-color: var(--primary); }
+  .flashcard .fc-front { font-size: 22px; font-weight: 800; color: var(--text-main); }
+  .flashcard .fc-back { font-size: 15px; color: var(--text-secondary); margin-top: 8px; display: none; }
+  .flashcard.flipped .fc-back { display: block; }
+  .flashcard .fc-hint { font-size: 11px; color: var(--text-light); margin-top: 8px; }
+
+  /* 听力题目 */
+  .listening-bar {
+    background: var(--primary-light); border-radius: 12px; padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px; margin-bottom: 12px; cursor: pointer;
+  }
+  .listening-bar .lb-play {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--primary-dark);
+    color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+  }
+  .listening-bar .lb-info { flex: 1; }
+  .listening-bar .lb-title { font-size: 14px; font-weight: 700; color: var(--text-main); }
+  .listening-bar .lb-sub { font-size: 11px; color: var(--text-secondary); }
+
+  /* 电影详情 */
+  .movie-poster {
+    width: 100%; aspect-ratio: 3/4; max-height: 300px; border-radius: 16px;
+    margin-bottom: 14px; display: flex; align-items: center; justify-content: center;
+    font-size: 72px; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .movie-info-row { display: flex; gap: 16px; margin-bottom: 12px; }
+  .movie-info-row .mi-item { text-align: center; }
+  .movie-info-row .mi-val { font-size: 16px; font-weight: 800; color: var(--primary-dark); }
+  .movie-info-row .mi-label { font-size: 10px; color: var(--text-light); }
+  .movie-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px; }
+
+  /* 弹窗按钮 */
+  .modal-btn-row { display: flex; gap: 10px; margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -877,23 +974,23 @@
       </div>
       <div class="section-title">🏅 今日运动打卡</div>
       <div class="sport-cards">
-        <div class="sport-card" id="sportCardio" onclick="punchSport('cardio')">
+        <div class="sport-card" id="sportCardio" onclick="openSportModal('cardio')">
           <div class="sport-emoji">🏃‍♀️</div>
           <div class="sport-name">有氧</div>
           <div class="sport-items">跑步 · 椭圆机<br>跳绳 · 游泳</div>
-          <div class="sport-btn">点击打卡</div>
+          <div class="sport-btn">跟练</div>
         </div>
-        <div class="sport-card" id="sportStrength" onclick="punchSport('strength')">
+        <div class="sport-card" id="sportStrength" onclick="openSportModal('strength')">
           <div class="sport-emoji">🏋️</div>
           <div class="sport-name">无氧</div>
           <div class="sport-items">力量训练<br>器械训练</div>
-          <div class="sport-btn">点击打卡</div>
+          <div class="sport-btn">跟练</div>
         </div>
-        <div class="sport-card" id="sportHiit" onclick="punchSport('hiit')">
+        <div class="sport-card" id="sportHiit" onclick="openSportModal('hiit')">
           <div class="sport-emoji">🔥</div>
           <div class="sport-name">混氧HIIT</div>
           <div class="sport-items">高强度间歇<br>波比跳 · 战绳</div>
-          <div class="sport-btn">点击打卡</div>
+          <div class="sport-btn">跟练</div>
         </div>
       </div>
       <div class="section-title" style="margin-top:16px;">🧘 体态管理</div>
@@ -1033,39 +1130,39 @@
         </div>
       </div>
       <div class="section-title">📖 今日任务</div>
-      <div class="checkbox-item" id="eng1">
-        <div class="checkbox-custom" onclick="toggleEng(1)"></div>
+      <div class="checkbox-item" id="eng1" onclick="openEngModal(1)">
+        <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(1)"></div>
         <div class="checkbox-info">
           <div class="checkbox-text">📝 背诵核心词汇 120个</div>
-          <div class="checkbox-note">雅思高频词 Unit 8</div>
+          <div class="checkbox-note">点击开始训练 →</div>
         </div>
       </div>
-      <div class="checkbox-item" id="eng2">
-        <div class="checkbox-custom" onclick="toggleEng(2)"></div>
+      <div class="checkbox-item" id="eng2" onclick="openEngModal(2)">
+        <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(2)"></div>
         <div class="checkbox-info">
           <div class="checkbox-text">👂 听力练习 Section 2</div>
-          <div class="checkbox-note">地图题专项训练</div>
+          <div class="checkbox-note">点击开始训练 →</div>
         </div>
       </div>
-      <div class="checkbox-item" id="eng3">
-        <div class="checkbox-custom" onclick="toggleEng(3)"></div>
+      <div class="checkbox-item" id="eng3" onclick="openEngModal(3)">
+        <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(3)"></div>
         <div class="checkbox-info">
           <div class="checkbox-text">✍️ 写作 Task 2 练习</div>
-          <div class="checkbox-note">议论文 40分钟限时</div>
+          <div class="checkbox-note">点击开始训练 →</div>
         </div>
       </div>
-      <div class="checkbox-item" id="eng4">
-        <div class="checkbox-custom" onclick="toggleEng(4)"></div>
+      <div class="checkbox-item" id="eng4" onclick="openEngModal(4)">
+        <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(4)"></div>
         <div class="checkbox-info">
           <div class="checkbox-text">🗣️ 口语 Part 2 模考</div>
-          <div class="checkbox-note">话题卡练习 2分钟</div>
+          <div class="checkbox-note">点击开始训练 →</div>
         </div>
       </div>
-      <div class="checkbox-item" id="eng5">
-        <div class="checkbox-custom" onclick="toggleEng(5)"></div>
+      <div class="checkbox-item" id="eng5" onclick="openEngModal(5)">
+        <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(5)"></div>
         <div class="checkbox-info">
           <div class="checkbox-text">📖 精读剑桥真题 Passage</div>
-          <div class="checkbox-note">剑18 Test3 Reading</div>
+          <div class="checkbox-note">点击开始训练 →</div>
         </div>
       </div>
     </div>
@@ -1086,21 +1183,21 @@
         </div>
       </div>
       <div class="section-title">🎯 待看清单</div>
-      <div class="media-card" onclick="showToast('开始观影 🎬')">
+      <div class="media-card" id="movieCard0" onclick="openMovieModal(0)">
         <div class="mc-banner" style="background:linear-gradient(135deg,#ff8fab,#ff6b9d);">🎥</div>
         <div class="mc-body">
           <div class="mc-title">🎬 阿甘正传</div>
           <div class="mc-desc">经典励志 · 汤姆·汉克斯主演 · 豆瓣9.5</div>
         </div>
       </div>
-      <div class="media-card" onclick="showToast('开始观影 🎬')">
+      <div class="media-card" id="movieCard1" onclick="openMovieModal(1)">
         <div class="mc-banner" style="background:linear-gradient(135deg,#ffb6c1,#ff8fab);">🌍</div>
         <div class="mc-body">
           <div class="mc-title">📺 蓝色星球 II</div>
           <div class="mc-desc">BBC纪录片 · 海洋自然 · 豆瓣9.8</div>
         </div>
       </div>
-      <div class="media-card" onclick="showToast('开始观影 🎬')">
+      <div class="media-card" id="movieCard2" onclick="openMovieModal(2)">
         <div class="mc-banner" style="background:linear-gradient(135deg,#ffc0cb,#ffb6c1);">💫</div>
         <div class="mc-body">
           <div class="mc-title">🎬 千与千寻</div>
@@ -1115,6 +1212,15 @@
 
 <!-- Toast -->
 <div class="toast" id="toast" style="display:none;"></div>
+
+<!-- ===== 通用弹窗 ===== -->
+<div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="closeModal(event)">
+  <div class="modal-sheet" id="modalSheet" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-close" onclick="closeModal()">✕</div>
+    <div id="modalContent"></div>
+  </div>
+</div>
 
 <script>
 // ========== 全局状态 ==========
@@ -1343,21 +1449,97 @@ function updateMorningProgress() {
   document.getElementById('morningProgress').textContent = done + '/3 完成';
 }
 
-function punchSport(type) {
-  state.sportPunched[type] = !state.sportPunched[type];
+// 跟练视频数据
+const sportVideos = {
+  cardio: { title: '🏃‍♀️ 有氧燃脂跟练', duration: '25分钟', steps: ['开合跳 1分钟 × 3组','高抬腿 45秒 × 3组','波比跳 30秒 × 2组','跳绳模拟 2分钟 × 2组','拉伸放松 5分钟'], icon: '🏃‍♀️', color: '#ff8fab' },
+  strength: { title: '🏋️ 力量训练跟练', duration: '20分钟', steps: ['深蹲 15次 × 3组','俯卧撑 10次 × 3组','平板支撑 45秒 × 3组','臀桥 20次 × 3组','拉伸放松 3分钟'], icon: '🏋️', color: '#ff6b9d' },
+  hiit: { title: '🔥 高强度HIIT跟练', duration: '15分钟', steps: ['Burpee跳 30秒 × 4组','战绳模拟 30秒 × 4组','登山跑 30秒 × 4组','跳箱模拟 30秒 × 4组','全身拉伸 3分钟'], icon: '🔥', color: '#e84c7e' },
+};
+
+// 弹窗通用函数
+let modalTimer = null;
+let modalTimerSec = 0;
+let modalTimerActive = false;
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modalOverlay')) return;
+  if (modalTimer) { clearInterval(modalTimer); modalTimer = null; }
+  modalTimerActive = false;
+  document.getElementById('modalOverlay').style.display = 'none';
+}
+
+function openSportModal(type) {
+  const v = sportVideos[type];
+  const done = state.sportPunched[type];
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-title">${v.icon} ${v.title}</div>
+    <div class="modal-subtitle">跟随视频指导完成训练，训练结束后点击「完成打卡」</div>
+    <div class="video-container" style="background:linear-gradient(135deg,${v.color},#ff8fab);">
+      <div class="play-btn" onclick="startSportTimer('${type}')">▶</div>
+      <div class="vid-title">${v.title}</div>
+      <div class="vid-duration">⏱ ${v.duration}</div>
+    </div>
+    <div class="timer-circle" id="sportTimerCircle">
+      <div class="timer-num" id="sportTimerNum">${v.duration}</div>
+      <div class="timer-label" id="sportTimerLabel">点击上方播放开始计时</div>
+    </div>
+    <div class="section-title">📋 训练动作</div>
+    ${v.steps.map(s => `<div class="checkbox-item"><div class="checkbox-info"><div class="checkbox-text">${s}</div></div></div>`).join('')}
+    <div class="modal-btn-row">
+      <button class="btn btn-outline btn-sm" style="flex:1;" onclick="closeModal()">关闭</button>
+      <button class="btn btn-primary btn-sm" style="flex:1;" id="sportFinishBtn" onclick="completeSport('${type}')" ${done ? 'disabled' : ''}>${done ? '✅ 已完成' : '完成打卡 ✅'}</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+
+function startSportTimer(type) {
+  if (modalTimerActive) return;
+  modalTimerActive = true;
+  modalTimerSec = 0;
+  const totalSec = type === 'cardio' ? 1500 : type === 'strength' ? 1200 : 900;
+  const totalStr = sportVideos[type].duration;
+  const circle = document.getElementById('sportTimerCircle');
+  const num = document.getElementById('sportTimerNum');
+  const label = document.getElementById('sportTimerLabel');
+  if (circle) circle.classList.add('active');
+  if (label) label.textContent = '训练进行中...';
+  modalTimer = setInterval(() => {
+    modalTimerSec++;
+    const remain = totalSec - modalTimerSec;
+    const min = Math.floor(remain / 60);
+    const sec = remain % 60;
+    if (num) num.textContent = min + ':' + String(sec).padStart(2,'0');
+    if (remain <= 0) {
+      clearInterval(modalTimer);
+      modalTimer = null;
+      if (num) num.textContent = '00:00';
+      if (label) label.textContent = '🎉 训练完成！';
+      if (circle) circle.classList.remove('active');
+      document.getElementById('sportFinishBtn').disabled = false;
+      modalTimerActive = false;
+    }
+  }, 1000);
+}
+
+function completeSport(type) {
+  if (modalTimer) { clearInterval(modalTimer); modalTimer = null; }
+  modalTimerActive = false;
+  state.sportPunched[type] = true;
   saveState();
-  const card = document.getElementById('sport' + type.charAt(0).toUpperCase() + type.slice(1));
-  const btn = card.querySelector('.sport-btn');
-  if (state.sportPunched[type]) {
-    card.classList.add('done'); btn.textContent = '✅ 已打卡';
-    showToast('🎉 打卡成功！');
-    if (Object.values(state.sportPunched).every(v => v)) state.sportStreak++;
-  } else {
-    card.classList.remove('done'); btn.textContent = '点击打卡';
-    if (!Object.values(state.sportPunched).some(v => v)) state.sportStreak = Math.max(0, state.sportStreak - 1);
-  }
+  updateSportUI(type);
   updateSportProgress();
   if (state.dashboardActive) updateDashboardProgress();
+  showToast('🎉 训练完成，打卡成功！');
+  closeModal();
+}
+
+function updateSportUI(type) {
+  const card = document.getElementById('sport' + type.charAt(0).toUpperCase() + type.slice(1));
+  if (card && state.sportPunched[type]) {
+    card.classList.add('done');
+    card.querySelector('.sport-btn').textContent = '✅ 已打卡';
+  }
 }
 
 function updateSportProgress() {
@@ -1400,6 +1582,34 @@ function toggleReview(idx) {
 }
 
 // ========== 英语雅思 ==========
+const engTrainingData = {
+  1: { title: '📝 背诵核心词汇', vocab: [
+    {en:'abandon', zh:'放弃，抛弃'},{en:'abstract', zh:'抽象的；摘要'},{en:'academic', zh:'学术的；学院的'},
+    {en:'accommodate', zh:'容纳；提供住宿'},{en:'accompany', zh:'陪伴；伴随'},{en:'accumulate', zh:'积累，积聚'},
+    {en:'accurate', zh:'准确的，精确的'},{en:'achieve', zh:'实现，达成'},{en:'acknowledge', zh:'承认；致谢'},
+    {en:'acquire', zh:'获得，习得'},
+  ]},
+  2: { title: '👂 听力练习', questions: [
+    {q:'Where is the library located?', a:'Next to the cafeteria', opts:['Next to the cafeteria','Behind the gym','Near the park']},
+    {q:'What time does the lecture start?', a:'10:30 AM', opts:['9:00 AM','10:30 AM','11:15 AM']},
+    {q:'How many books can be borrowed?', a:'Up to 10', opts:['Up to 5','Up to 10','Up to 15']},
+  ]},
+  3: { title: '✍️ 写作 Task 2', topics: [
+    'Some people think that governments should spend more money on railways rather than roads. To what extent do you agree or disagree?',
+    'In many countries, people are living longer. What problems does this cause? What can be done?',
+    'Technology is making communication easier. Do the advantages outweigh the disadvantages?',
+  ], tips: '引言段：改写题目 + 表明立场\n主体段1：论点 + 解释 + 例证\n主体段2：反驳/补充论点\n结论段：总结 + 重申立场\n⏱ 建议用时40分钟，至少250词' },
+  4: { title: '🗣️ 口语 Part 2', cards: [
+    {topic:'Describe a memorable trip', hints:['Where/when','Who with','What happened','Why memorable']},
+    {topic:'Describe your favorite book', hints:['Title/author','What about','How you found it','Why you like it']},
+    {topic:'Describe a person who inspires you', hints:['Who they are','How you know them','What they did','Why inspiring']},
+  ]},
+  5: { title: '📖 精读真题', passages: [
+    {title:'The History of Glass', q:'When was glass first made by humans?', a:'Around 3500 BC', content:'Glass has been used by humans for thousands of years. The earliest known man-made glass objects date back to around 3500 BC in Mesopotamia...'},
+    {title:'Urban Farming', q:'What is the main benefit of urban farming mentioned?', a:'Reducing food transportation costs', content:'Urban farming is gaining popularity worldwide. One key benefit is reducing the distance food travels from farm to table...'},
+  ]},
+};
+
 function toggleEng(idx) {
   state.engDone[idx - 1] = !state.engDone[idx - 1];
   saveState();
@@ -1408,6 +1618,77 @@ function toggleEng(idx) {
   if (state.engDone[idx - 1]) { cb.classList.add('checked'); cb.textContent = '✓'; el.classList.add('done'); }
   else { cb.classList.remove('checked'); cb.textContent = ''; el.classList.remove('done'); }
   if (state.dashboardActive) updateDashboardProgress();
+}
+
+function openEngModal(idx) {
+  const data = engTrainingData[idx];
+  const done = state.engDone[idx - 1];
+  let inner = '';
+  if (idx === 1) {
+    // 词汇闪卡
+    inner = data.vocab.map((v,i) => `
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="fc-front">${v.en}</div>
+        <div class="fc-back">${v.zh}</div>
+        <div class="fc-hint">点击翻转查看释义 · ${i+1}/${data.vocab.length}</div>
+      </div>
+    `).join('');
+  } else if (idx === 2) {
+    // 听力练习
+    inner = `<div class="listening-bar" onclick="showToast('🎧 播放听力录音...')"><div class="lb-play">▶</div><div class="lb-info"><div class="lb-title">Section 2 - 校园地图题</div><div class="lb-sub">点击播放音频</div></div></div>`;
+    inner += data.questions.map((q,i) => `
+      <div class="card" style="margin-bottom:8px;">
+        <div style="font-size:14px;font-weight:600;margin-bottom:8px;">Q${i+1}. ${q.q}</div>
+        ${q.opts.map(o => `<div class="question-opt" onclick="showToast('${o===q.a ? \"✅ 正确！\" : \"❌ 正确答案是：\"+q.a}')"><span class="opt-letter">${String.fromCharCode(65+data.questions[0].opts.indexOf(o))}</span> ${o}</div>`).join('')}
+      </div>
+    `).join('');
+  } else if (idx === 3) {
+    // 写作
+    inner = `<div class="card" style="margin-bottom:8px;"><div style="font-size:13px;font-weight:600;margin-bottom:6px;">📝 随机话题</div><div style="font-size:14px;color:var(--text-main);line-height:1.6;">${data.topics[0]}</div></div>`;
+    inner += `<div class="card"><div style="font-size:13px;font-weight:600;margin-bottom:6px;">💡 写作结构建议</div><div style="font-size:12px;color:var(--text-secondary);white-space:pre-line;line-height:1.6;">${data.tips}</div></div>`;
+  } else if (idx === 4) {
+    // 口语
+    inner = data.cards.map(c => `
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="fc-front">${c.topic}</div>
+        <div class="fc-back" style="text-align:left;font-size:12px;">提示：${c.hints.join(' · ')}</div>
+        <div class="fc-hint">点击翻转查看提示</div>
+      </div>
+    `).join('');
+    inner += `<div style="font-size:11px;color:var(--text-light);text-align:center;margin-top:8px;">⏱ 准备1分钟 → 讲述2分钟</div>`;
+  } else if (idx === 5) {
+    // 阅读
+    inner = data.passages.map((p,i) => `
+      <div class="card" style="margin-bottom:8px;">
+        <div style="font-size:14px;font-weight:700;margin-bottom:6px;">📖 ${p.title}</div>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;">${p.content}</div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:4px;">❓ ${p.q}</div>
+        <div class="question-opt" onclick="showToast('${p.a === \"正确答案\" ? \"✅ 正确！\" : \"✅ 正确答案：\" + p.a}')"><span class="opt-letter">A</span> ${p.a}</div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-title">${data.title}</div>
+    <div class="modal-subtitle">完成下方训练内容后，点击「完成训练」划掉任务</div>
+    ${inner}
+    <div class="modal-btn-row">
+      <button class="btn btn-outline btn-sm" style="flex:1;" onclick="closeModal()">关闭</button>
+      <button class="btn btn-primary btn-sm" style="flex:1;" onclick="completeEng(${idx})" ${done ? 'disabled' : ''}>${done ? '✅ 已完成' : '完成训练 ✅'}</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+
+function completeEng(idx) {
+  state.engDone[idx - 1] = true;
+  saveState();
+  const el = document.getElementById('eng' + idx);
+  const cb = el.querySelector('.checkbox-custom');
+  cb.classList.add('checked'); cb.textContent = '✓'; el.classList.add('done');
+  if (state.dashboardActive) updateDashboardProgress();
+  showToast('🎉 训练完成！');
+  closeModal();
 }
 
 // ========== 驾驶考试 ==========
@@ -1503,6 +1784,43 @@ function showToast(msg) {
   toast.style.display = 'block';
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { toast.style.display = 'none'; }, 1800);
+}
+
+// ========== 观影纪录弹窗 ==========
+const movieData = [
+  { title: '阿甘正传', year: '1994', rating: '9.5', director: '罗伯特·泽米吉斯', cast: '汤姆·汉克斯', genre: '剧情/励志', desc: '一个智商只有75的男孩阿甘，凭借自己的坚持和善良，跑出了不平凡的人生。他见证了美国几十年的历史变迁，从越战到乒乓外交，从苹果公司到跑步横穿美国。', poster: '🎥', color: 'linear-gradient(135deg,#ff8fab,#ff6b9d)' },
+  { title: '蓝色星球 II', year: '2017', rating: '9.8', director: 'BBC', cast: '大卫·爱登堡', genre: '纪录片/自然', desc: 'BBC历时4年拍摄的海洋纪录片，从热带珊瑚礁到冰封两极，探索深海未知生物。每一帧都美到窒息，让你重新认识这个蓝色星球。', poster: '🌍', color: 'linear-gradient(135deg,#ffb6c1,#ff8fab)' },
+  { title: '千与千寻', year: '2001', rating: '9.4', director: '宫崎骏', cast: '柊瑠美', genre: '动画/奇幻/治愈', desc: '10岁女孩千寻和父母误入神灵世界，父母因贪吃变成猪，千寻为了拯救父母，在汤婆婆的汤屋中工作。这是宫崎骏最伟大的作品，关于成长、勇气和记住自己的名字。', poster: '💫', color: 'linear-gradient(135deg,#ffc0cb,#ffb6c1)' },
+];
+
+function openMovieModal(idx) {
+  const m = movieData[idx];
+  document.getElementById('modalContent').innerHTML = `
+    <div class="movie-poster" style="background:${m.color};">${m.poster}</div>
+    <div class="modal-title">${m.poster} ${m.title}</div>
+    <div class="movie-info-row">
+      <div class="mi-item"><div class="mi-val">${m.rating}</div><div class="mi-label">豆瓣评分</div></div>
+      <div class="mi-item"><div class="mi-val">${m.year}</div><div class="mi-label">年份</div></div>
+      <div class="mi-item"><div class="mi-val">${m.genre}</div><div class="mi-label">类型</div></div>
+    </div>
+    <div class="movie-desc">${m.desc}</div>
+    <div style="font-size:12px;color:var(--text-light);margin-bottom:12px;">🎬 导演：${m.director} ｜ 👤 主演：${m.cast}</div>
+    <div class="modal-btn-row">
+      <button class="btn btn-outline btn-sm" style="flex:1;" onclick="closeModal()">关闭</button>
+      <button class="btn btn-primary btn-sm" style="flex:1;" id="movieDoneBtn" onclick="completeMovie(${idx})">✅ 已看完，划掉</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+
+function completeMovie(idx) {
+  const card = document.getElementById('movieCard' + idx);
+  if (card) {
+    card.style.opacity = '0.45';
+    card.querySelector('.mc-title').style.textDecoration = 'line-through';
+  }
+  showToast('🎬 已标记为已看完！');
+  closeModal();
 }
 
 // ========== 初始化 ==========
