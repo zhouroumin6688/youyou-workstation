@@ -1448,6 +1448,47 @@ function updateDashboardProgress() {
   if (streakEl) streakEl.textContent = Math.max(state.sportStreak, state.postureDone ? 1 : 0);
 }
 
+// 实时更新首页网格状态文字
+function updateAllGridStatus() {
+  const grids = document.querySelectorAll('.grid-item');
+  grids.forEach(g => {
+    const status = g.querySelector('.gi-status');
+    if (!status) return;
+    const onclick = g.getAttribute('onclick') || '';
+    if (onclick.includes("'todo'")) {
+      const total = state.todos.length;
+      const done = state.todos.filter(t => t.done).length;
+      if (total === 0) status.textContent = '暂无待办';
+      else if (done === total) status.textContent = '✅ 全部完成';
+      else status.textContent = `已完成 ${done}/${total}`;
+    } else if (onclick.includes("'review'")) {
+      const done = state.reviewDone.filter(Boolean).length;
+      if (done === 0) status.textContent = '未完成';
+      else if (done === 5) status.textContent = '✅ 全部完成';
+      else status.textContent = `已完成 ${done}/5`;
+    } else if (onclick.includes("'sport'")) {
+      const done = Object.values(state.sportPunched).filter(Boolean).length;
+      if (done === 0) status.textContent = '未开始';
+      else if (done === 3) status.textContent = '✅ 全部打卡';
+      else status.textContent = `已打卡 ${done}/3`;
+    } else if (onclick.includes("'english'")) {
+      const done = state.engDone.filter(Boolean).length;
+      if (done === 0) status.textContent = '未开始';
+      else if (done === 5) status.textContent = '✅ 全部完成';
+      else status.textContent = `已完成 ${done}/5`;
+    } else if (onclick.includes("'drive'")) {
+      const done = Object.keys(state.driveAnswers).length;
+      if (done === 0) status.textContent = '未开始';
+      else status.textContent = `已答 ${done} 题`;
+    } else if (onclick.includes("'money'")) {
+      const done = state.moneyTasksDone.filter(Boolean).length;
+      if (done === 0) status.textContent = '未开始';
+      else if (done === 4) status.textContent = '✅ 全部完成';
+      else status.textContent = `已完成 ${done}/4`;
+    }
+  });
+}
+
 // ========== 待办清单 ==========
 function addTodo() {
   const input = document.getElementById('todoInput');
@@ -1461,6 +1502,7 @@ function addTodo() {
   input.value = '';
   saveState();
   renderTodos();
+  updateAllGridStatus();
   showToast('✅ 已添加待办');
 }
 
@@ -1469,6 +1511,7 @@ function toggleTodo(id) {
   if (todo) todo.done = !todo.done;
   saveState();
   renderTodos();
+  updateAllGridStatus();
   if (state.dashboardActive) updateDashboardProgress();
 }
 
@@ -1476,6 +1519,7 @@ function deleteTodo(id) {
   state.todos = state.todos.filter(t => t.id !== id);
   saveState();
   renderTodos();
+  updateAllGridStatus();
   showToast('🗑️ 已删除');
 }
 
@@ -1534,6 +1578,7 @@ function toggleMorning(idx) {
   else { cb.classList.remove('checked'); cb.textContent = ''; el.classList.remove('done'); }
   updateMorningProgress();
   updateSportProgress();
+  updateAllGridStatus();
   if (state.dashboardActive) updateDashboardProgress();
 }
 
@@ -1628,6 +1673,7 @@ function completeSport(type) {
   saveState();
   updateSportUI(type);
   updateSportProgress();
+  updateAllGridStatus();
   if (state.dashboardActive) updateDashboardProgress();
   showToast('🎉 训练完成，打卡成功！');
   closeModal();
@@ -1664,6 +1710,7 @@ function switchPostureTab(tab, el) {
 function completePosture() {
   state.postureDone = true;
   saveState();
+  updateAllGridStatus();
   showToast('🎉 太棒了！今日体态训练完成！');
   if (state.dashboardActive) updateDashboardProgress();
 }
@@ -1677,6 +1724,7 @@ function toggleReview(idx) {
   if (state.reviewDone[idx - 1]) { cb.classList.add('checked'); cb.textContent = '✓'; el.classList.add('done'); }
   else { cb.classList.remove('checked'); cb.textContent = ''; el.classList.remove('done'); }
   document.getElementById('reviewDone').textContent = state.reviewDone.filter(Boolean).length;
+  updateAllGridStatus();
   if (state.dashboardActive) updateDashboardProgress();
 }
 
@@ -1716,6 +1764,7 @@ function toggleEng(idx) {
   const cb = el.querySelector('.checkbox-custom');
   if (state.engDone[idx - 1]) { cb.classList.add('checked'); cb.textContent = '✓'; el.classList.add('done'); }
   else { cb.classList.remove('checked'); cb.textContent = ''; el.classList.remove('done'); }
+  updateAllGridStatus();
   if (state.dashboardActive) updateDashboardProgress();
 }
 
@@ -2073,6 +2122,7 @@ function toggleMoneyTask(n) {
   cb.classList.toggle('checked');
   cb.textContent = cb.classList.contains('checked') ? '✓' : '';
   el.classList.toggle('done');
+  state.moneyTasksDone[n - 1] = cb.classList.contains('checked');
   const done = cb.classList.contains('checked');
   if (done) {
     const count = [1,2,3,4].filter(i => {
@@ -2082,11 +2132,13 @@ function toggleMoneyTask(n) {
     showToast(count === 4 ? '🎉 太棒了！今日实操全部完成！' : `✅ 已完成 ${count}/4 项任务`);
   }
   saveState();
+  updateAllGridStatus();
 }
 
 // ========== 初始化 ==========
 initDriveQuestions();
 renderTodos();
+updateAllGridStatus();
 
 // ========== 从存档恢复 UI 状态 ==========
 function restoreUI() {
