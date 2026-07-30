@@ -1471,18 +1471,24 @@ function closeModal(e) {
 function openSportModal(type) {
   const v = sportVideos[type];
   const done = state.sportPunched[type];
+  const searchKW = type === 'cardio' ? '有氧燃脂跟练' : type === 'strength' ? '力量训练跟练' : 'HIIT高强度间歇';
   document.getElementById('modalContent').innerHTML = `
     <div class="modal-title">${v.icon} ${v.title}</div>
-    <div class="modal-subtitle">跟随视频指导完成训练，训练结束后点击「完成打卡」</div>
-    <div class="video-container" style="background:linear-gradient(135deg,${v.color},#ff8fab);">
-      <div class="play-btn" onclick="startSportTimer('${type}')">▶</div>
-      <div class="vid-title">${v.title}</div>
-      <div class="vid-duration">⏱ ${v.duration}</div>
-    </div>
+    <div class="modal-subtitle">点击下方按钮跳转B站跟练视频，完成后回来打卡</div>
+    <a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(searchKW)}" target="_blank" rel="noopener" style="text-decoration:none;display:block;margin-bottom:12px;">
+      <div class="video-container" style="background:linear-gradient(135deg,${v.color},#ff8fab);">
+        <div class="play-btn">▶</div>
+        <div class="vid-title">${v.title}</div>
+        <div class="vid-duration">⏱ ${v.duration}</div>
+      </div>
+    </a>
     <div class="timer-circle" id="sportTimerCircle">
       <div class="timer-num" id="sportTimerNum">${v.duration}</div>
-      <div class="timer-label" id="sportTimerLabel">点击上方播放开始计时</div>
+      <div class="timer-label" id="sportTimerLabel">跳转B站跟练后点这里计时</div>
     </div>
+    <a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(searchKW)}" target="_blank" rel="noopener" style="text-decoration:none;display:block;margin-bottom:10px;">
+      <button class="btn btn-primary btn-block" style="background:#fb7299;box-shadow:0 4px 14px rgba(251,114,153,0.4);">🎬 在哔哩哔哩跟练</button>
+    </a>
     <div class="section-title">📋 训练动作</div>
     ${v.steps.map(s => `<div class="checkbox-item"><div class="checkbox-info"><div class="checkbox-text">${s}</div></div></div>`).join('')}
     <div class="modal-btn-row">
@@ -1668,9 +1674,20 @@ function openEngModal(idx) {
     `).join('');
   }
 
+  const bilibiliKW = {
+    1: '雅思核心词汇背诵',
+    2: '雅思听力真题练习',
+    3: '雅思写作Task2',
+    4: '雅思口语Part2',
+    5: '雅思阅读真题精讲',
+  };
+
   document.getElementById('modalContent').innerHTML = `
     <div class="modal-title">${data.title}</div>
     <div class="modal-subtitle">完成下方训练内容后，点击「完成训练」划掉任务</div>
+    <a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(bilibiliKW[idx])}" target="_blank" rel="noopener" style="text-decoration:none;display:block;margin-bottom:10px;">
+      <button class="btn btn-primary btn-block" style="background:#fb7299;box-shadow:0 4px 14px rgba(251,114,153,0.4);">🎬 在哔哩哔哩学习</button>
+    </a>
     ${inner}
     <div class="modal-btn-row">
       <button class="btn btn-outline btn-sm" style="flex:1;" onclick="closeModal()">关闭</button>
