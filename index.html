@@ -1805,6 +1805,9 @@ function openMovieModal(idx) {
     </div>
     <div class="movie-desc">${m.desc}</div>
     <div style="font-size:12px;color:var(--text-light);margin-bottom:12px;">🎬 导演：${m.director} ｜ 👤 主演：${m.cast}</div>
+    <a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(m.title)}" target="_blank" rel="noopener" style="text-decoration:none;display:block;margin-bottom:10px;">
+      <button class="btn btn-primary btn-block" style="background:#fb7299;box-shadow:0 4px 14px rgba(251,114,153,0.4);">🎬 在哔哩哔哩观看</button>
+    </a>
     <div class="modal-btn-row">
       <button class="btn btn-outline btn-sm" style="flex:1;" onclick="closeModal()">关闭</button>
       <button class="btn btn-primary btn-sm" style="flex:1;" id="movieDoneBtn" onclick="completeMovie(${idx})">✅ 已看完，划掉</button>
