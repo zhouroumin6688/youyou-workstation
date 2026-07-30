@@ -676,6 +676,10 @@
         <div class="nav-icon"><img src="icons/Hello_Kitty_style_menu_icon__c_2026-07-29T14-52-24.png" alt="观影"></div>
         <span class="nav-label">观影纪录</span>
       </div>
+      <div class="nav-item" data-page="yijing">
+        <div class="nav-icon"><img src="icons/Hello_Kitty_style_menu_icon__c_2026-07-29T14-45-17.png" alt="易经"></div>
+        <span class="nav-label">易经八字</span>
+      </div>
     </div>
   </nav>
 
@@ -754,6 +758,10 @@
           <div class="grid-item" onclick="navigateTo('movie')">
             <div class="gi-icon"><img src="icons/Hello_Kitty_style_menu_icon__c_2026-07-29T14-52-24.png"></div>
             <div class="gi-title">观影纪录</div><div class="gi-status">未记录</div>
+          </div>
+          <div class="grid-item" onclick="navigateTo('yijing')">
+            <div class="gi-emoji">☯️</div>
+            <div class="gi-title">易经八字</div><div class="gi-status">未开始</div>
           </div>
         </div>
       </div>
@@ -1205,6 +1213,54 @@
         </div>
       </div>
       <button class="btn btn-outline btn-block" onclick="showToast('添加新片到清单 🎬')">+ 添加观影</button>
+    </div>
+
+    <!-- ===== 页面10：易经八字养生 ===== -->
+    <div class="page" id="page-yijing" style="display:none;">
+      <div class="page-title">☯️ 易经八字 · 养生知识</div>
+      <div class="card card-pink">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:13px;opacity:0.85;">本周学习</div>
+            <div style="font-size:28px;font-weight:800;">3 课时</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:13px;opacity:0.85;">累计学习</div>
+            <div style="font-size:28px;font-weight:800;">12 课时</div>
+          </div>
+        </div>
+      </div>
+      <div class="section-title">📖 学习模块</div>
+
+      <div class="media-card" onclick="openYijingModal('bagua')">
+        <div class="mc-banner" style="background:linear-gradient(135deg,#e8d5b7,#c9a96e);">☯️</div>
+        <div class="mc-body">
+          <div class="mc-title">☯️ 八卦基础入门</div>
+          <div class="mc-desc">乾兑离震巽坎艮坤 · 阴阳五行 · 天干地支</div>
+        </div>
+      </div>
+      <div class="media-card" onclick="openYijingModal('bazi')">
+        <div class="mc-banner" style="background:linear-gradient(135deg,#d4c5a9,#a68b5b);">📜</div>
+        <div class="mc-body">
+          <div class="mc-title">📜 八字命理入门</div>
+          <div class="mc-desc">排八字 · 十神 · 大运流年 · 五行生克</div>
+        </div>
+      </div>
+      <div class="media-card" onclick="openYijingModal('yangsheng')">
+        <div class="mc-banner" style="background:linear-gradient(135deg,#c8d6a0,#8a9a5b);">🍵</div>
+        <div class="mc-body">
+          <div class="mc-title">🍵 中医养生智慧</div>
+          <div class="mc-desc">四季养生 · 经络穴位 · 食疗调理 · 子午流注</div>
+        </div>
+      </div>
+      <div class="media-card" onclick="openYijingModal('fengshui')">
+        <div class="mc-banner" style="background:linear-gradient(135deg,#b8c9d4,#6b8a9a);">🏠</div>
+        <div class="mc-body">
+          <div class="mc-title">🏠 风水布局基础</div>
+          <div class="mc-desc">家居风水 · 办公室布局 · 财位桃花位 · 化煞</div>
+        </div>
+      </div>
+      <button class="btn btn-outline btn-block" onclick="showToast('添加新学习主题 📖')">+ 添加学习主题</button>
     </div>
 
   </main>
@@ -1841,6 +1897,32 @@ function completeMovie(idx) {
   }
   showToast('🎬 已标记为已看完！');
   closeModal();
+}
+
+// ========== 易经八字弹窗 ==========
+const yijingData = {
+  bagua: { title: '☯️ 八卦基础入门', desc: '乾兑离震巽坎艮坤八卦详解，理解阴阳五行相生相克，掌握天干地支的基础知识，为你打开中华传统文化的大门。', poster: '☯️', color: 'linear-gradient(135deg,#e8d5b7,#c9a96e)', kw: '易经八卦入门讲解' },
+  bazi: { title: '📜 八字命理入门', desc: '学习如何排八字四柱，了解十神关系，掌握大运流年的推算方法，理解五行生克制化在命局中的应用。', poster: '📜', color: 'linear-gradient(135deg,#d4c5a9,#a68b5b)', kw: '八字命理入门教程' },
+  yangsheng: { title: '🍵 中医养生智慧', desc: '四季养生之道，经络穴位按摩，食疗调理方法，子午流注时辰养生，让你顺应自然规律，保持身心健康。', poster: '🍵', color: 'linear-gradient(135deg,#c8d6a0,#8a9a5b)', kw: '中医养生知识入门' },
+  fengshui: { title: '🏠 风水布局基础', desc: '家居风水布局要点，办公室财位摆放，桃花位催旺方法，常见形煞化解技巧，打造和谐宜居空间。', poster: '🏠', color: 'linear-gradient(135deg,#b8c9d4,#6b8a9a)', kw: '风水布局基础知识' },
+};
+
+function openYijingModal(type) {
+  const y = yijingData[type];
+  document.getElementById('modalContent').innerHTML = `
+    <div class="movie-poster" style="background:${y.color};">${y.poster}</div>
+    <div class="modal-title">${y.title}</div>
+    <div class="movie-desc">${y.desc}</div>
+    <a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(y.kw)}" target="_blank" rel="noopener" style="text-decoration:none;display:block;margin-bottom:10px;">
+      <button class="btn btn-primary btn-block" style="background:#fb7299;box-shadow:0 4px 14px rgba(251,114,153,0.4);">🎬 在哔哩哔哩学习</button>
+    </a>
+    <div style="font-size:12px;color:var(--text-light);text-align:center;margin-bottom:10px;">推荐UP主：国学新知 · 中医老李 · 传统文化讲堂</div>
+    <div class="modal-btn-row">
+      <button class="btn btn-outline btn-sm" style="flex:1;" onclick="closeModal()">关闭</button>
+      <button class="btn btn-primary btn-sm" style="flex:1;" onclick="closeModal();showToast('☯️ 学完记得做笔记哦～')">✅ 已学完</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').style.display = 'flex';
 }
 
 // ========== 初始化 ==========
