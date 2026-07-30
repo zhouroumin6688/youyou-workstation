@@ -126,8 +126,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 0 calc(var(--safe-area-bottom) + 8px);
-    gap: 2px;
+    padding: 6px 0;
+    gap: 0;
     border-right: 1px solid rgba(255,182,193,0.3);
     z-index: 10;
     flex-shrink: 0;
@@ -137,26 +137,25 @@
   }
   .sidebar::-webkit-scrollbar { display: none; width: 0; }
   .nav-logo {
-    width: 46px; height: 46px; border-radius: 14px; margin-bottom: 6px; margin-top: 4px;
+    width: 40px; height: 40px; border-radius: 12px; margin-bottom: 4px; margin-top: 2px;
     background: linear-gradient(135deg, #ffb6c1, #ff8fab);
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 3px 10px rgba(255,107,157,0.3);
     overflow: hidden;
     flex-shrink: 0;
   }
-  .nav-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
+  .nav-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
   .nav-top, .nav-bottom {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
-    flex: 1;
+    gap: 1px;
   }
-  .nav-top { justify-content: flex-start; padding-top: 4px; }
-  .nav-bottom { justify-content: flex-end; padding-bottom: 4px; }
+  .nav-top { padding-top: 2px; }
+  .nav-bottom { padding-bottom: 4px; }
   .nav-item {
-    width: 56px;
-    height: 62px;
+    width: 48px;
+    height: 52px;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
@@ -173,14 +172,14 @@
     flex-shrink: 0;
   }
   .nav-item .nav-icon {
-    width: 38px; height: 38px; border-radius: 11px;
+    width: 32px; height: 32px; border-radius: 10px;
     overflow: hidden; display: flex; align-items: center; justify-content: center;
     transition: all 0.25s ease;
   }
   .nav-item .nav-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
   .nav-item .nav-label {
-    font-size: 8.5px; font-weight: 500; letter-spacing: 0.2px; text-align: center;
-    line-height: 1.1;
+    font-size: 7.5px; font-weight: 500; letter-spacing: 0.2px; text-align: center;
+    line-height: 1.1; max-width: 46px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .nav-item:active { transform: scale(0.92); }
   .nav-item.active {
