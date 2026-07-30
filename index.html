@@ -835,47 +835,145 @@
 
     <!-- ===== 页面4：赚钱思路想法实操 ===== -->
     <div class="page" id="page-money" style="display:none;">
-      <div class="page-title">💰 赚钱思路 & 想法实操</div>
-      <div class="card card-pink">
-        <div style="font-size:13px;opacity:0.85;">本月目标</div>
-        <div style="font-size:28px;font-weight:800;">¥ 10,000</div>
-        <div style="font-size:12px;opacity:0.7;margin-top:4px;">已完成 ¥ 2,300 / 23%</div>
+      <div class="page-title">💰 小白赚钱实操</div>
+      <div class="card card-pink" style="background:linear-gradient(135deg,#ff6b9d,#ff9a76);">
+        <div style="font-size:12px;opacity:0.85;">💡 零门槛 · 人人可做</div>
+        <div style="font-size:13px;opacity:0.9;margin-top:4px;line-height:1.6;">不需要技能、不需要粉丝、不需要投入<br>选一个方向，每天花1小时，坚持30天</div>
       </div>
-      <div class="section-title">💡 赚钱想法清单</div>
-      <div class="project-card" onclick="showToast('打开项目详情 📝')">
-        <div class="pc-header">
-          <div class="pc-icon"><img src="icons/Hello_Kitty_style_menu_icon__c_2026-07-29T14-46-40.png"></div>
-          <div>
-            <div class="pc-title">📱 自媒体运营</div>
-            <div class="pc-meta">小红书 / 抖音 / 公众号</div>
+
+      <!-- 方法1 -->
+      <div class="card" style="margin-bottom:12px;" onclick="openMoneyDetail('survey')">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="font-size:32px;">📋</div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;">问卷调查 & 线上任务</div>
+            <div style="font-size:12px;color:var(--text-secondary);">动动手指就能赚钱</div>
+          </div>
+          <div style="font-size:14px;font-weight:700;color:#ff6b9d;">日入50-150元</div>
+        </div>
+        <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+          <span class="tag" style="font-size:10px;">✅ 零门槛</span><span class="tag" style="font-size:10px;">📱 手机即可</span><span class="tag" style="font-size:10px;">⏰ 随时可做</span>
+        </div>
+      </div>
+
+      <!-- 方法2 -->
+      <div class="card" style="margin-bottom:12px;" onclick="openMoneyDetail('secondhand')">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="font-size:32px;">🛍️</div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;">闲鱼卖闲置 & 无货源</div>
+            <div style="font-size:12px;color:var(--text-secondary);">把家里不用的变成钱</div>
+          </div>
+          <div style="font-size:14px;font-weight:700;color:#ff6b9d;">月入500-3000元</div>
+        </div>
+        <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+          <span class="tag" style="font-size:10px;">🏠 在家就能做</span><span class="tag" style="font-size:10px;">📦 无需囤货</span><span class="tag" style="font-size:10px;">🔄 可持续</span>
+        </div>
+      </div>
+
+      <!-- 方法3 -->
+      <div class="card" style="margin-bottom:12px;" onclick="openMoneyDetail('redbook')">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="font-size:32px;">📕</div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;">小红书素人接广</div>
+            <div style="font-size:12px;color:var(--text-secondary);">0粉也能开始，慢慢积累</div>
+          </div>
+          <div style="font-size:14px;font-weight:700;color:#ff6b9d;">月入200-2000元</div>
+        </div>
+        <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+          <span class="tag" style="font-size:10px;">📝 分享日常</span><span class="tag" style="font-size:10px;">🎯 精准变现</span><span class="tag" style="font-size:10px;">📈 越做越值钱</span>
+        </div>
+      </div>
+
+      <!-- 方法4 -->
+      <div class="card" style="margin-bottom:12px;" onclick="openMoneyDetail('shortvideo')">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="font-size:32px;">🎬</div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;">短视频剪辑接单</div>
+            <div style="font-size:12px;color:var(--text-secondary);">学一个免费工具就能接活</div>
+          </div>
+          <div style="font-size:14px;font-weight:700;color:#ff6b9d;">月入1000-5000元</div>
+        </div>
+        <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+          <span class="tag" style="font-size:10px;">🛠️ 剪映免费</span><span class="tag" style="font-size:10px;">📚 7天学会</span><span class="tag" style="font-size:10px;">💼 需求量大</span>
+        </div>
+      </div>
+
+      <!-- 方法5 -->
+      <div class="card" style="margin-bottom:12px;" onclick="openMoneyDetail('writing')">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="font-size:32px;">✍️</div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;">AI写作 & 文案代写</div>
+            <div style="font-size:12px;color:var(--text-secondary);">用免费AI工具帮你写</div>
+          </div>
+          <div style="font-size:14px;font-weight:700;color:#ff6b9d;">月入500-3000元</div>
+        </div>
+        <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+          <span class="tag" style="font-size:10px;">🤖 AI辅助</span><span class="tag" style="font-size:10px;">🆓 工具免费</span><span class="tag" style="font-size:10px;">📊 单子多</span>
+        </div>
+      </div>
+
+      <!-- 方法6 -->
+      <div class="card" style="margin-bottom:12px;" onclick="openMoneyDetail('dida')">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="font-size:32px;">🏃</div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;">跑腿 & 众包配送</div>
+            <div style="font-size:12px;color:var(--text-secondary);">下班后顺路就能赚</div>
+          </div>
+          <div style="font-size:14px;font-weight:700;color:#ff6b9d;">日入80-200元</div>
+        </div>
+        <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;">
+          <span class="tag" style="font-size:10px;">🚲 灵活时间</span><span class="tag" style="font-size:10px;">📍 就近接单</span><span class="tag" style="font-size:10px;">💰 当天到账</span>
+        </div>
+      </div>
+
+      <!-- 今日实操任务 -->
+      <div class="section-title" style="margin-top:20px;">🎯 今日实操任务</div>
+      <div class="card" style="margin-bottom:8px;">
+        <div class="checkbox-item" id="moneyTask1" style="border:none;margin:0;padding:8px 0;">
+          <div class="checkbox-custom" onclick="toggleMoneyTask(1)"></div>
+          <div class="checkbox-info">
+            <div class="checkbox-text">🔍 选一个方向，看完教程视频</div>
+            <div class="checkbox-note">花30分钟了解基本玩法</div>
           </div>
         </div>
-        <div class="pc-progress-bar"><div class="pc-progress-fill" style="width:35%;"></div></div>
-        <div class="pc-footer"><span>📈 预期月入 ¥3,000</span><span>进度 35%</span></div>
-      </div>
-      <div class="project-card" onclick="showToast('打开项目详情 📝')">
-        <div class="pc-header">
-          <div class="pc-icon"><img src="icons/Hello_Kitty_style_menu_icon__c_2026-07-29T14-46-40.png"></div>
-          <div>
-            <div class="pc-title">🎨 接单设计</div>
-            <div class="pc-meta">LOGO / 海报 / PPT</div>
+        <div class="checkbox-item" id="moneyTask2" style="border:none;margin:0;padding:8px 0;">
+          <div class="checkbox-custom" onclick="toggleMoneyTask(2)"></div>
+          <div class="checkbox-info">
+            <div class="checkbox-text">📝 注册/下载需要的App</div>
+            <div class="checkbox-note">迈出第一步最重要</div>
           </div>
         </div>
-        <div class="pc-progress-bar"><div class="pc-progress-fill" style="width:20%;"></div></div>
-        <div class="pc-footer"><span>📈 预期月入 ¥2,000</span><span>进度 20%</span></div>
-      </div>
-      <div class="project-card" onclick="showToast('打开项目详情 📝')">
-        <div class="pc-header">
-          <div class="pc-icon"><img src="icons/Hello_Kitty_style_menu_icon__c_2026-07-29T14-46-40.png"></div>
-          <div>
-            <div class="pc-title">🛒 闲鱼电商</div>
-            <div class="pc-meta">二手 / 闲置 / 代购</div>
+        <div class="checkbox-item" id="moneyTask3" style="border:none;margin:0;padding:8px 0;">
+          <div class="checkbox-custom" onclick="toggleMoneyTask(3)"></div>
+          <div class="checkbox-info">
+            <div class="checkbox-text">⏰ 完成今日1小时实操</div>
+            <div class="checkbox-note">动手做比光看重要100倍</div>
           </div>
         </div>
-        <div class="pc-progress-bar"><div class="pc-progress-fill" style="width:15%;"></div></div>
-        <div class="pc-footer"><span>📈 预期月入 ¥1,500</span><span>进度 15%</span></div>
+        <div class="checkbox-item" id="moneyTask4" style="border:none;margin:0;padding:8px 0;">
+          <div class="checkbox-custom" onclick="toggleMoneyTask(4)"></div>
+          <div class="checkbox-info">
+            <div class="checkbox-text">📊 记录今日收入 & 心得</div>
+            <div class="checkbox-note">哪怕只有5块钱也值得记</div>
+          </div>
+        </div>
       </div>
-      <button class="btn btn-outline btn-block" onclick="showToast('快去记录新想法吧 💡')">+ 添加新赚钱想法</button>
+    </div>
+
+    <!-- 赚钱方法详情弹窗 -->
+    <div class="modal-overlay" id="moneyDetailModal" style="display:none;" onclick="if(event.target===this)closeMoneyDetail()">
+      <div class="modal-sheet" style="max-height:85vh;overflow-y:auto;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <div style="font-size:18px;font-weight:700;" id="moneyDetailTitle"></div>
+          <div style="font-size:24px;cursor:pointer;" onclick="closeMoneyDetail()">✕</div>
+        </div>
+        <div id="moneyDetailContent"></div>
+      </div>
     </div>
 
     <!-- ===== 页面5：内容复盘每日任务 ===== -->
@@ -1298,6 +1396,7 @@ const defaultState = {
   driveSubject: 'all',
   driveIndex: 0,
   driveAnswers: {},
+  moneyTasksDone: [false,false,false,false],
 };
 
 // 从 localStorage 加载状态
@@ -1335,6 +1434,7 @@ function saveState() {
       driveSubject: state.driveSubject,
       driveIndex: state.driveIndex,
       driveAnswers: state.driveAnswers,
+      moneyTasksDone: state.moneyTasksDone,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
   } catch(e) { console.warn('保存存档失败:', e); }
@@ -1349,6 +1449,7 @@ function resetTodayData() {
   state.engDone = [false,false,false,false,false];
   state.driveAnswers = {};
   state.driveIndex = 0;
+  state.moneyTasksDone = [false,false,false,false];
   saveState();
 }
 
@@ -1924,6 +2025,128 @@ function openYijingModal(type) {
   document.getElementById('modalOverlay').style.display = 'flex';
 }
 
+// ========== 赚钱实操详情弹窗 ==========
+const moneyDetailData = {
+  survey: {
+    title: '📋 问卷调查 & 线上任务',
+    desc: '用手机填问卷、做小任务，每单1-20元，适合碎片时间。注册多个平台同时做，收入叠加。不需要任何技能，有手机就能开始。',
+    steps: [
+      '① 下载注册：问卷星、腾讯问卷、爱调研、收奖网、集思吧',
+      '② 完善个人资料（资料越完整推送的问卷越多）',
+      '③ 每天花30分钟刷问卷，优先做单价高的',
+      '④ 同时注册"众人帮""蚂蚁微客"做线上小任务',
+      '⑤ 坚持一周后摸清规律，每天稳定赚50+'
+    ],
+    kw: '问卷调查赚钱 小白教程',
+    tips: '💡 关键：多平台同时做，不要只盯一个。早上和晚上问卷最多。'
+  },
+  secondhand: {
+    title: '🛍️ 闲鱼卖闲置 & 无货源',
+    desc: '先卖家里闲置练手（衣服、书、小电器），熟练后可以做无货源——从拼多多/1688找低价好物，加价挂闲鱼卖出，不用囤货不用发货。',
+    steps: [
+      '① 打开闲鱼App，拍3-5张清晰照片，发布你的第一件闲置',
+      '② 标题写"关键词+卖点"（如"全新仅拆 小米充电宝 30元包邮"）',
+      '③ 定价技巧：原价3-5折出得快，每天擦亮商品增加曝光',
+      '④ 熟练后尝试无货源：拼多多搜"爆款"，挂闲鱼加价20-50%',
+      '⑤ 有人下单后，用买家地址去拼多多下单，填买家地址即可'
+    ],
+    kw: '闲鱼无货源 小白入门教程',
+    tips: '💡 关键：照片要实拍！标题要多塞关键词！每天擦亮！'
+  },
+  redbook: {
+    title: '📕 小红书素人接广',
+    desc: '不需要成为大V！素人（几百粉）也能接品牌合作。发日常生活分享、好物推荐、穿搭记录，积累到500粉就能在"小红书蒲公英"接单。',
+    steps: [
+      '① 确定你的方向：穿搭/美食/读书/育儿/家居/护肤，选你擅长的',
+      '② 每天发1条笔记，封面要好看！用醒图/黄油相机P图',
+      '③ 标题用"谁懂啊""救命""绝了"等爆款句式',
+      '④ 坚持发30天，积累到500粉开通蒲公英接广',
+      '⑤ 素人一条广告50-300元，粉丝越多价格越高'
+    ],
+    kw: '小红书素人接广告 零粉起步',
+    tips: '💡 关键：封面是命！标题是魂！坚持日更是王道！'
+  },
+  shortvideo: {
+    title: '🎬 短视频剪辑接单',
+    desc: '用免费软件"剪映"就能接单。学7天基本操作后，在闲鱼/淘宝/猪八戒网接剪辑单子。短视频时代剪辑需求巨大，一条视频50-500元不等。',
+    steps: [
+      '① 下载剪映App（完全免费），B站搜"剪映入门教程"跟着学',
+      '② 花一周学基础：裁剪、加字幕、配音乐、转场、调色',
+      '③ 剪3条样片当作作品集（拿网上素材练手）',
+      '④ 去闲鱼发"视频剪辑接单"，定价30-100元/条起步',
+      '⑤ 做得好客户会复购和转介绍，单价逐渐涨上去'
+    ],
+    kw: '剪映入门教程 视频剪辑接单',
+    tips: '💡 关键：先接便宜的攒评价，好评多了再涨价！'
+  },
+  writing: {
+    title: '✍️ AI写作 & 文案代写',
+    desc: '用免费AI工具（豆包/Kimi/通义千问）帮你写文章。接单渠道：闲鱼、淘宝、豆瓣小组、QQ群。写公众号推文、小红书文案、工作总结、演讲稿等。',
+    steps: [
+      '① 下载豆包App或打开Kimi网页版（都免费）',
+      '② 学会用AI：告诉它"写一篇关于XX的小红书文案，语气活泼"',
+      '③ 去闲鱼搜"文案代写"，看看别人怎么定价和描述',
+      '④ 自己也发一个"文案代写"商品，定价10-50元/篇',
+      '⑤ 客户给需求 → AI生成初稿 → 你润色优化 → 交稿收钱'
+    ],
+    kw: 'AI写作赚钱 文案代写教程',
+    tips: '💡 关键：AI写初稿你改，效率翻10倍！记得加入自己的风格。'
+  },
+  dida: {
+    title: '🏃 跑腿 & 众包配送',
+    desc: '用美团众包/蜂鸟众包/闪送等App，下班后或周末接单。不需要全职，随时上线随时接，适合想马上看到现金的人。',
+    steps: [
+      '① 下载"美团众包"或"蜂鸟众包"App',
+      '② 实名认证，上传身份证，参加线上培训（10分钟）',
+      '③ 交押金（美团100元可退），即可开始接单',
+      '④ 先在家附近接2-3单熟悉流程，每单5-20元',
+      '⑤ 熟练后高峰期（午餐11-13点、晚餐17-19点）多跑多得'
+    ],
+    kw: '美团众包新手教程 兼职跑腿',
+    tips: '💡 关键：高峰期多跑！下雨天有补贴！安全第一！'
+  }
+};
+
+function openMoneyDetail(type) {
+  const d = moneyDetailData[type];
+  if (!d) return;
+  document.getElementById('moneyDetailTitle').textContent = d.title;
+  document.getElementById('moneyDetailContent').innerHTML = `
+    <div style="font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px;">${d.desc}</div>
+    <div class="section-title" style="margin-top:0;">📋 实操步骤</div>
+    <div style="font-size:13px;line-height:1.9;margin-bottom:14px;color:var(--text-main);">
+      ${d.steps.map(s => `<div style="padding:4px 0;">${s}</div>`).join('')}
+    </div>
+    <div style="background:#fff3f8;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:12px;color:#c94b7c;line-height:1.6;">${d.tips}</div>
+    <a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(d.kw)}" target="_blank" rel="noopener" style="text-decoration:none;display:block;margin-bottom:10px;">
+      <button class="btn btn-primary btn-block" style="background:#fb7299;box-shadow:0 4px 14px rgba(251,114,153,0.4);">🎬 在哔哩哔哩看教程视频</button>
+    </a>
+    <button class="btn btn-outline btn-block" onclick="closeMoneyDetail();showToast('💪 加油！今天就开始行动！')">✅ 我知道了，开始行动</button>
+  `;
+  document.getElementById('moneyDetailModal').style.display = 'flex';
+}
+
+function closeMoneyDetail() {
+  document.getElementById('moneyDetailModal').style.display = 'none';
+}
+
+function toggleMoneyTask(n) {
+  const el = document.getElementById('moneyTask' + n);
+  const cb = el.querySelector('.checkbox-custom');
+  cb.classList.toggle('checked');
+  cb.textContent = cb.classList.contains('checked') ? '✓' : '';
+  el.classList.toggle('done');
+  const done = cb.classList.contains('checked');
+  if (done) {
+    const count = [1,2,3,4].filter(i => {
+      const c = document.getElementById('moneyTask' + i).querySelector('.checkbox-custom');
+      return c.classList.contains('checked');
+    }).length;
+    showToast(count === 4 ? '🎉 太棒了！今日实操全部完成！' : `✅ 已完成 ${count}/4 项任务`);
+  }
+  saveState();
+}
+
 // ========== 初始化 ==========
 initDriveQuestions();
 renderTodos();
@@ -2001,7 +2224,16 @@ function restoreUI() {
   });
   applyDriveFilter();
 
-  // 9. 恢复导航页面
+  // 9. 恢复赚钱实操任务勾选
+  state.moneyTasksDone.forEach((done, i) => {
+    const el = document.getElementById('moneyTask' + (i + 1));
+    if (el && done) {
+      const cb = el.querySelector('.checkbox-custom');
+      cb.classList.add('checked'); cb.textContent = '✓'; el.classList.add('done');
+    }
+  });
+
+  // 10. 恢复导航页面
   navigateTo(state.activePage);
 }
 
@@ -2031,6 +2263,7 @@ function checkNewDay() {
     state.postureDone = false;
     state.reviewDone = [false,false,false,false,false];
     state.engDone = [false,false,false,false,false];
+    state.moneyTasksDone = [false,false,false,false];
     state.dashboardActive = false;
     state.activePage = 'home';
     saveState();
