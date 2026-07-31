@@ -1173,60 +1173,196 @@
 
     <!-- ===== 页面8：英语雅思 ===== -->
     <div class="page" id="page-english" style="display:none;">
-      <div class="page-title">📚 英语雅思</div>
+      <div class="page-title">📚 英语学习 · 零基础起步</div>
       <div class="card card-pink">
-        <div style="font-size:13px;opacity:0.85;">目标分数</div>
-        <div style="font-size:32px;font-weight:800;">7.5</div>
-        <div style="font-size:12px;opacity:0.7;margin-top:4px;">当前模考 6.0 · 距目标 1.5分</div>
+        <div style="font-size:12px;opacity:0.85;">🎯 学习路径：零基础 → 四级 → 六级 → 雅思</div>
+        <div style="font-size:13px;opacity:0.9;margin-top:6px;line-height:1.6;">当前阶段：<span id="engStageLabel" style="font-weight:700;">🔰 基础入门</span></div>
       </div>
       <div class="stat-row">
         <div class="stat-item">
-          <div class="stat-val">120</div>
-          <div class="stat-label">词汇量/日</div>
+          <div class="stat-val" id="engVocabCount">0</div>
+          <div class="stat-label">累计词汇</div>
         </div>
         <div class="stat-item">
-          <div class="stat-val">45min</div>
-          <div class="stat-label">今日学习</div>
+          <div class="stat-val" id="engDayStreak">0</div>
+          <div class="stat-label">连续天数</div>
         </div>
         <div class="stat-item">
-          <div class="stat-val">7天</div>
-          <div class="stat-label">连续打卡</div>
+          <div class="stat-val" id="engTodayMin">0</div>
+          <div class="stat-label">今日分钟</div>
         </div>
       </div>
-      <div class="section-title">📖 今日任务</div>
-      <div class="checkbox-item" id="eng1" onclick="openEngModal(1)">
-        <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(1)"></div>
-        <div class="checkbox-info">
-          <div class="checkbox-text">📝 背诵核心词汇 120个</div>
-          <div class="checkbox-note">点击开始训练 →</div>
+
+      <!-- 阶段选择 -->
+      <div class="section-title" style="margin-top:4px;">📶 学习阶段</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">
+        <span class="tag tag-cat active" data-stage="basic" onclick="switchEngStage('basic',this)" style="font-size:11px;">🔰 基础入门</span>
+        <span class="tag tag-cat" data-stage="cet4" onclick="switchEngStage('cet4',this)" style="font-size:11px;">📗 四级冲刺</span>
+        <span class="tag tag-cat" data-stage="cet6" onclick="switchEngStage('cet6',this)" style="font-size:11px;">📘 六级提升</span>
+        <span class="tag tag-cat" data-stage="ielts" onclick="switchEngStage('ielts',this)" style="font-size:11px;">🎯 雅思备考</span>
+      </div>
+
+      <div id="engBasicView">
+        <div class="section-title">📖 今日基础任务（每天30分钟）</div>
+        <div class="card" style="margin-bottom:8px;">
+          <div class="checkbox-item" id="eng1" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(1)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(1)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">🔤 背10个基础单词（附音标+例句）</div>
+              <div class="checkbox-note">点击查看今日单词 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" id="eng2" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(2)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(2)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">🎧 听1段慢速英语（带中文字幕）</div>
+              <div class="checkbox-note">点击播放听力 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" id="eng3" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(3)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(3)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">📝 写3句简单英文日记</div>
+              <div class="checkbox-note">点击查看今日话题 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" id="eng4" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(4)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(4)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">🗣️ 跟读5句日常口语</div>
+              <div class="checkbox-note">点击查看今日句子 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" id="eng5" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(5)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(5)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">📺 看1个英语学习视频（B站）</div>
+              <div class="checkbox-note">点击跳转B站学习 →</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="checkbox-item" id="eng2" onclick="openEngModal(2)">
-        <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(2)"></div>
-        <div class="checkbox-info">
-          <div class="checkbox-text">👂 听力练习 Section 2</div>
-          <div class="checkbox-note">点击开始训练 →</div>
+
+      <div id="engCet4View" style="display:none;">
+        <div class="section-title">📖 今日四级任务（每天45分钟）</div>
+        <div class="card" style="margin-bottom:8px;">
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(6)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(6)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">📝 背20个四级高频词</div>
+              <div class="checkbox-note">点击查看今日单词 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(7)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(7)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">👂 四级听力真题1篇</div>
+              <div class="checkbox-note">点击播放练习 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(8)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(8)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">📖 四级阅读真题1篇</div>
+              <div class="checkbox-note">点击开始做题 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(9)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(9)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">✍️ 四级翻译练习1篇</div>
+              <div class="checkbox-note">点击查看题目 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(10)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(10)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">📺 四级备考视频（B站）</div>
+              <div class="checkbox-note">点击跳转学习 →</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="checkbox-item" id="eng3" onclick="openEngModal(3)">
-        <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(3)"></div>
-        <div class="checkbox-info">
-          <div class="checkbox-text">✍️ 写作 Task 2 练习</div>
-          <div class="checkbox-note">点击开始训练 →</div>
+
+      <div id="engCet6View" style="display:none;">
+        <div class="section-title">📖 今日六级任务（每天50分钟）</div>
+        <div class="card" style="margin-bottom:8px;">
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(11)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(11)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">📝 背25个六级核心词</div>
+              <div class="checkbox-note">点击查看今日单词 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(12)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(12)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">👂 六级听力真题1套</div>
+              <div class="checkbox-note">点击播放练习 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(13)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(13)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">📖 长篇阅读匹配题</div>
+              <div class="checkbox-note">点击开始做题 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(14)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(14)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">✍️ 六级写作模板练习</div>
+              <div class="checkbox-note">点击查看题目 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(15)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(15)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">📺 六级备考视频（B站）</div>
+              <div class="checkbox-note">点击跳转学习 →</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="checkbox-item" id="eng4" onclick="openEngModal(4)">
-        <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(4)"></div>
-        <div class="checkbox-info">
-          <div class="checkbox-text">🗣️ 口语 Part 2 模考</div>
-          <div class="checkbox-note">点击开始训练 →</div>
-        </div>
-      </div>
-      <div class="checkbox-item" id="eng5" onclick="openEngModal(5)">
-        <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(5)"></div>
-        <div class="checkbox-info">
-          <div class="checkbox-text">📖 精读剑桥真题 Passage</div>
-          <div class="checkbox-note">点击开始训练 →</div>
+
+      <div id="engIeltsView" style="display:none;">
+        <div class="section-title">📖 今日雅思任务（每天60分钟）</div>
+        <div class="card" style="margin-bottom:8px;">
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(16)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(16)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">📝 背30个雅思核心词</div>
+              <div class="checkbox-note">点击查看今日单词 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(17)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(17)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">👂 雅思听力Section练习</div>
+              <div class="checkbox-note">点击播放练习 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(18)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(18)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">📖 雅思阅读Passage 1篇</div>
+              <div class="checkbox-note">点击开始做题 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(19)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(19)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">✍️ 雅思Task 1/2练习</div>
+              <div class="checkbox-note">点击查看题目 →</div>
+            </div>
+          </div>
+          <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;" onclick="openEngModal(20)">
+            <div class="checkbox-custom" onclick="event.stopPropagation();toggleEng(20)"></div>
+            <div class="checkbox-info">
+              <div class="checkbox-text">🗣️ 雅思口语话题练习</div>
+              <div class="checkbox-note">点击查看话题 →</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1352,6 +1488,7 @@ const defaultState = {
   postureDone: false,
   reviewDone: [false,false,false,false,false],
   engDone: [false,false,false,false,false],
+  engStage: 'basic',
   driveSubject: 'all',
   driveIndex: 0,
   driveAnswers: {},
@@ -1395,6 +1532,7 @@ function saveState() {
       postureDone: state.postureDone,
       reviewDone: state.reviewDone,
       engDone: state.engDone,
+      engStage: state.engStage,
       driveSubject: state.driveSubject,
       driveIndex: state.driveIndex,
       driveAnswers: state.driveAnswers,
@@ -1765,38 +1903,192 @@ function toggleReview(idx) {
 }
 
 // ========== 英语雅思 ==========
-const engTrainingData = {
-  1: { title: '📝 背诵核心词汇', vocab: [
-    {en:'abandon', zh:'放弃，抛弃'},{en:'abstract', zh:'抽象的；摘要'},{en:'academic', zh:'学术的；学院的'},
-    {en:'accommodate', zh:'容纳；提供住宿'},{en:'accompany', zh:'陪伴；伴随'},{en:'accumulate', zh:'积累，积聚'},
-    {en:'accurate', zh:'准确的，精确的'},{en:'achieve', zh:'实现，达成'},{en:'acknowledge', zh:'承认；致谢'},
-    {en:'acquire', zh:'获得，习得'},
-  ]},
-  2: { title: '👂 听力练习', questions: [
-    {q:'Where is the library located?', a:'Next to the cafeteria', opts:['Next to the cafeteria','Behind the gym','Near the park']},
-    {q:'What time does the lecture start?', a:'10:30 AM', opts:['9:00 AM','10:30 AM','11:15 AM']},
-    {q:'How many books can be borrowed?', a:'Up to 10', opts:['Up to 5','Up to 10','Up to 15']},
-  ]},
-  3: { title: '✍️ 写作 Task 2', topics: [
-    'Some people think that governments should spend more money on railways rather than roads. To what extent do you agree or disagree?',
-    'In many countries, people are living longer. What problems does this cause? What can be done?',
-    'Technology is making communication easier. Do the advantages outweigh the disadvantages?',
-  ], tips: '引言段：改写题目 + 表明立场\n主体段1：论点 + 解释 + 例证\n主体段2：反驳/补充论点\n结论段：总结 + 重申立场\n⏱ 建议用时40分钟，至少250词' },
-  4: { title: '🗣️ 口语 Part 2', cards: [
-    {topic:'Describe a memorable trip', hints:['Where/when','Who with','What happened','Why memorable']},
-    {topic:'Describe your favorite book', hints:['Title/author','What about','How you found it','Why you like it']},
-    {topic:'Describe a person who inspires you', hints:['Who they are','How you know them','What they did','Why inspiring']},
-  ]},
-  5: { title: '📖 精读真题', passages: [
-    {title:'The History of Glass', q:'When was glass first made by humans?', a:'Around 3500 BC', content:'Glass has been used by humans for thousands of years. The earliest known man-made glass objects date back to around 3500 BC in Mesopotamia...'},
-    {title:'Urban Farming', q:'What is the main benefit of urban farming mentioned?', a:'Reducing food transportation costs', content:'Urban farming is gaining popularity worldwide. One key benefit is reducing the distance food travels from farm to table...'},
-  ]},
+const engStageData = {
+  basic: {
+    label: '🔰 基础入门',
+    daily: 30,
+    vocab: [
+      {en:'hello', zh:'你好', phonetic:'/həˈloʊ/'},
+      {en:'goodbye', zh:'再见', phonetic:'/ɡʊdˈbaɪ/'},
+      {en:'thank you', zh:'谢谢你', phonetic:'/θæŋk juː/'},
+      {en:'please', zh:'请', phonetic:'/pliːz/'},
+      {en:'sorry', zh:'对不起', phonetic:'/ˈsɒri/'},
+      {en:'friend', zh:'朋友', phonetic:'/frend/'},
+      {en:'family', zh:'家庭', phonetic:'/ˈfæməli/'},
+      {en:'school', zh:'学校', phonetic:'/skuːl/'},
+      {en:'work', zh:'工作', phonetic:'/wɜːrk/'},
+      {en:'love', zh:'爱；喜欢', phonetic:'/lʌv/'},
+    ],
+    listening: [
+      {title:'慢速英语 - 自我介绍', sub:'VOA慢速英语 · 适合零基础', kw:'慢速英语自我介绍 零基础'},
+      {title:'慢速英语 - 日常问候', sub:'每日英语听力 · 基础对话', kw:'英语日常对话 零基础 慢速'},
+    ],
+    writing: [
+      {topic:'用英文写3句话：今天做了什么？', example:'Today I went to work. I ate lunch with my friend. I watched TV at home.'},
+      {topic:'用英文写3句话：你最喜欢的食物？', example:'I like noodles. Noodles are delicious. My mother makes the best noodles.'},
+      {topic:'用英文写3句话：描述你的房间', example:'My room is small. There is a bed and a desk. I like my room.'},
+    ],
+    speaking: [
+      {en:'How are you?', zh:'你好吗？', reply:'I\'m fine, thank you.'},
+      {en:'What\'s your name?', zh:'你叫什么名字？', reply:'My name is ___.'},
+      {en:'Where are you from?', zh:'你从哪里来？', reply:'I am from China.'},
+      {en:'What do you do?', zh:'你是做什么的？', reply:'I am a ___ (student/worker).'},
+      {en:'Nice to meet you.', zh:'很高兴认识你。', reply:'Nice to meet you too.'},
+    ],
+    bilibili: '英语零基础入门 从零开始学英语',
+  },
+  cet4: {
+    label: '📗 四级冲刺',
+    daily: 45,
+    vocab: [
+      {en:'abandon', zh:'放弃', phonetic:'/əˈbændən/'},
+      {en:'ability', zh:'能力', phonetic:'/əˈbɪləti/'},
+      {en:'abroad', zh:'在国外', phonetic:'/əˈbrɔːd/'},
+      {en:'absence', zh:'缺席', phonetic:'/ˈæbsəns/'},
+      {en:'absolute', zh:'绝对的', phonetic:'/ˈæbsəluːt/'},
+      {en:'absorb', zh:'吸收', phonetic:'/əbˈzɔːrb/'},
+      {en:'abstract', zh:'抽象的', phonetic:'/ˈæbstrækt/'},
+      {en:'abundant', zh:'丰富的', phonetic:'/əˈbʌndənt/'},
+      {en:'abuse', zh:'滥用；虐待', phonetic:'/əˈbjuːz/'},
+      {en:'academic', zh:'学术的', phonetic:'/ˌækəˈdemɪk/'},
+      {en:'accelerate', zh:'加速', phonetic:'/əkˈseləreɪt/'},
+      {en:'accent', zh:'口音', phonetic:'/ˈæksent/'},
+      {en:'accept', zh:'接受', phonetic:'/əkˈsept/'},
+      {en:'access', zh:'进入；通道', phonetic:'/ˈækses/'},
+      {en:'accompany', zh:'陪伴', phonetic:'/əˈkʌmpəni/'},
+      {en:'accomplish', zh:'完成', phonetic:'/əˈkɑːmplɪʃ/'},
+      {en:'account', zh:'账户；解释', phonetic:'/əˈkaʊnt/'},
+      {en:'accurate', zh:'准确的', phonetic:'/ˈækjərət/'},
+      {en:'achieve', zh:'实现', phonetic:'/əˈtʃiːv/'},
+      {en:'acknowledge', zh:'承认', phonetic:'/əkˈnɑːlɪdʒ/'},
+    ],
+    listening: [
+      {title:'四级听力真题 - 新闻篇', sub:'2019年6月真题Section A', kw:'四级听力真题 新闻'},
+      {title:'四级听力真题 - 长对话', sub:'2019年12月真题Section B', kw:'四级听力真题 长对话'},
+    ],
+    reading: [
+      {title:'Reading Passage: The Benefits of Bilingualism', content:'Research shows that learning a second language can improve brain function. Bilingual people often have better problem-solving skills...', q:'What is the main benefit of bilingualism mentioned?', opts:['Better problem-solving skills','Higher salary','More friends','Better health'], ans:0},
+      {title:'Reading Passage: Renewable Energy', content:'Solar and wind energy are becoming more popular worldwide. Many countries are investing in renewable energy to reduce pollution...', q:'Why are countries investing in renewable energy?', opts:['To make money','To reduce pollution','To create jobs','To save water'], ans:1},
+    ],
+    translation: [
+      {cn:'中国结是中国传统手工艺品之一，它代表着团结和幸福。', en:'Chinese knot is one of the traditional Chinese handicrafts, representing unity and happiness.'},
+      {cn:'茶在中国有五千多年的历史，是最受欢迎的饮品之一。', en:'Tea has a history of more than 5,000 years in China and is one of the most popular drinks.'},
+    ],
+    bilibili: '四级备考攻略 四级真题讲解',
+  },
+  cet6: {
+    label: '📘 六级提升',
+    daily: 50,
+    vocab: [
+      {en:'abnormal', zh:'异常的', phonetic:'/æbˈnɔːrml/'},
+      {en:'abolish', zh:'废除', phonetic:'/əˈbɑːlɪʃ/'},
+      {en:'abrupt', zh:'突然的', phonetic:'/əˈbrʌpt/'},
+      {en:'absurd', zh:'荒谬的', phonetic:'/əbˈsɜːrd/'},
+      {en:'abundance', zh:'丰富', phonetic:'/əˈbʌndəns/'},
+      {en:'academy', zh:'学院；学会', phonetic:'/əˈkædəmi/'},
+      {en:'accessory', zh:'配件；附件', phonetic:'/əkˈsesəri/'},
+      {en:'accommodate', zh:'容纳；适应', phonetic:'/əˈkɑːmədeɪt/'},
+      {en:'acquaint', zh:'使熟悉', phonetic:'/əˈkweɪnt/'},
+      {en:'activate', zh:'激活', phonetic:'/ˈæktɪveɪt/'},
+      {en:'acute', zh:'急性的；敏锐的', phonetic:'/əˈkjuːt/'},
+      {en:'addict', zh:'上瘾', phonetic:'/ˈædɪkt/'},
+      {en:'adequate', zh:'足够的', phonetic:'/ˈædɪkwət/'},
+      {en:'adhere', zh:'坚持；粘附', phonetic:'/ədˈhɪr/'},
+      {en:'adjacent', zh:'相邻的', phonetic:'/əˈdʒeɪsnt/'},
+      {en:'adjust', zh:'调整', phonetic:'/əˈdʒʌst/'},
+      {en:'administer', zh:'管理', phonetic:'/ədˈmɪnɪstər/'},
+      {en:'adolescent', zh:'青少年', phonetic:'/ˌædəˈlesnt/'},
+      {en:'adverse', zh:'不利的', phonetic:'/ˈædvɜːrs/'},
+      {en:'advocate', zh:'提倡；倡导者', phonetic:'/ˈædvəkeɪt/'},
+      {en:'aesthetic', zh:'美学的', phonetic:'/esˈθetɪk/'},
+      {en:'affection', zh:'感情', phonetic:'/əˈfekʃn/'},
+      {en:'affiliate', zh:'附属机构', phonetic:'/əˈfɪlieɪt/'},
+      {en:'affirm', zh:'确认', phonetic:'/əˈfɜːrm/'},
+      {en:'aggravate', zh:'加重', phonetic:'/ˈæɡrəveɪt/'},
+    ],
+    listening: [
+      {title:'六级听力真题 - 讲座篇', sub:'2019年6月真题Section C', kw:'六级听力真题 讲座'},
+    ],
+    reading: [
+      {title:'Reading: Climate Change and Agriculture', content:'Climate change poses significant challenges to global agriculture. Rising temperatures and extreme weather events are affecting crop yields worldwide...', q:'What is the main challenge discussed?', opts:['Rising temperatures affecting crops','Lack of water','Too many farmers','Low food prices'], ans:0},
+    ],
+    translation: [
+      {cn:'随着互联网的普及，电子商务已经成为人们日常生活中不可或缺的一部分。', en:'With the popularity of the Internet, e-commerce has become an indispensable part of people\'s daily lives.'},
+    ],
+    bilibili: '六级备考攻略 六级真题讲解',
+  },
+  ielts: {
+    label: '🎯 雅思备考',
+    daily: 60,
+    vocab: [
+      {en:'accommodation', zh:'住宿；适应', phonetic:'/əˌkɑːməˈdeɪʃn/'},
+      {en:'achievement', zh:'成就', phonetic:'/əˈtʃiːvmənt/'},
+      {en:'acknowledgement', zh:'承认；感谢', phonetic:'/əkˈnɑːlɪdʒmənt/'},
+      {en:'acquisition', zh:'获得；习得', phonetic:'/ˌækwɪˈzɪʃn/'},
+      {en:'adaptation', zh:'适应；改编', phonetic:'/ˌædæpˈteɪʃn/'},
+      {en:'adequate', zh:'足够的', phonetic:'/ˈædɪkwət/'},
+      {en:'adjacent', zh:'相邻的', phonetic:'/əˈdʒeɪsnt/'},
+      {en:'administration', zh:'管理；行政', phonetic:'/ədˌmɪnɪˈstreɪʃn/'},
+      {en:'adolescence', zh:'青春期', phonetic:'/ˌædəˈlesns/'},
+      {en:'advancement', zh:'进步；提升', phonetic:'/ədˈvænsmənt/'},
+      {en:'advertisement', zh:'广告', phonetic:'/ˌædvərˈtaɪzmənt/'},
+      {en:'affordable', zh:'负担得起的', phonetic:'/əˈfɔːrdəbl/'},
+      {en:'agriculture', zh:'农业', phonetic:'/ˈæɡrɪkʌltʃər/'},
+      {en:'alternative', zh:'替代的；选择', phonetic:'/ɔːlˈtɜːrnətɪv/'},
+      {en:'ambiguous', zh:'模糊的', phonetic:'/æmˈbɪɡjuəs/'},
+      {en:'ambitious', zh:'有雄心的', phonetic:'/æmˈbɪʃəs/'},
+      {en:'analysis', zh:'分析', phonetic:'/əˈnæləsɪs/'},
+      {en:'ancestor', zh:'祖先', phonetic:'/ˈænsestər/'},
+      {en:'anniversary', zh:'周年纪念', phonetic:'/ˌænɪˈvɜːrsəri/'},
+      {en:'anthropology', zh:'人类学', phonetic:'/ˌænθrəˈpɑːlədʒi/'},
+      {en:'anticipate', zh:'预期', phonetic:'/ænˈtɪsɪpeɪt/'},
+      {en:'apparatus', zh:'设备；仪器', phonetic:'/ˌæpəˈrætəs/'},
+      {en:'apparent', zh:'明显的', phonetic:'/əˈpærənt/'},
+      {en:'appetite', zh:'食欲', phonetic:'/ˈæpɪtaɪt/'},
+      {en:'appliance', zh:'电器', phonetic:'/əˈplaɪəns/'},
+      {en:'applicant', zh:'申请人', phonetic:'/ˈæplɪkənt/'},
+      {en:'appreciation', zh:'欣赏；感激', phonetic:'/əˌpriːʃiˈeɪʃn/'},
+      {en:'approach', zh:'方法；接近', phonetic:'/əˈproʊtʃ/'},
+      {en:'appropriate', zh:'适当的', phonetic:'/əˈproʊpriət/'},
+      {en:'architecture', zh:'建筑', phonetic:'/ˈɑːrkɪtektʃər/'},
+    ],
+    listening: [
+      {title:'雅思听力 Section 1 - 租房对话', sub:'剑16 Test 1 · 填空+选择', kw:'雅思听力Section1 租房'},
+      {title:'雅思听力 Section 2 - 校园导览', sub:'剑15 Test 2 · 地图题', kw:'雅思听力Section2 校园'},
+    ],
+    reading: [
+      {title:'IELTS Passage: The History of Glass', content:'Glass has been used by humans for thousands of years. The earliest known man-made glass objects date back to around 3500 BC in Mesopotamia. Glass-making techniques gradually spread across the ancient world...', q:'When was glass first made by humans?', opts:['Around 3500 BC','Around 2000 BC','Around 1000 BC','Around 500 AD'], ans:0},
+    ],
+    writing: [
+      {task:'Task 1: The chart below shows the percentage of households in a city that owned different electronic devices from 2000 to 2020. Summarize the information.', tips:'①开头改写题目 ②2-3个关键数据对比 ③趋势总结 ④不发表个人观点'},
+      {task:'Task 2: Some people think that governments should spend money on public transportation rather than building more roads. To what extent do you agree or disagree?', tips:'①改写题目+表明立场 ②主体段1：论点+例证 ③主体段2：反驳+补充 ④结论段'},
+    ],
+    speaking: [
+      {topic:'Describe a memorable journey', hints:'Where / When / Who with / What happened / Why memorable'},
+      {topic:'Describe a skill you want to learn', hints:'What skill / Why / How to learn / How it helps'},
+      {topic:'Describe a person who inspires you', hints:'Who / How you know / What they did / Why inspiring'},
+    ],
+    bilibili: '雅思备考 零基础雅思 雅思真题讲解',
+  }
 };
+
+function switchEngStage(stage, el) {
+  state.engStage = stage;
+  saveState();
+  document.querySelectorAll('[data-stage]').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('engBasicView').style.display = stage === 'basic' ? 'block' : 'none';
+  document.getElementById('engCet4View').style.display = stage === 'cet4' ? 'block' : 'none';
+  document.getElementById('engCet6View').style.display = stage === 'cet6' ? 'block' : 'none';
+  document.getElementById('engIeltsView').style.display = stage === 'ielts' ? 'block' : 'none';
+  document.getElementById('engStageLabel').textContent = engStageData[stage].label;
+}
 
 function toggleEng(idx) {
   state.engDone[idx - 1] = !state.engDone[idx - 1];
   saveState();
   const el = document.getElementById('eng' + idx);
+  if (!el) return;
   const cb = el.querySelector('.checkbox-custom');
   if (state.engDone[idx - 1]) { cb.classList.add('checked'); cb.textContent = '✓'; el.classList.add('done'); }
   else { cb.classList.remove('checked'); cb.textContent = ''; el.classList.remove('done'); }
@@ -1805,71 +2097,117 @@ function toggleEng(idx) {
 }
 
 function openEngModal(idx) {
-  const data = engTrainingData[idx];
-  const done = state.engDone[idx - 1];
-  let inner = '';
-  if (idx === 1) {
-    // 词汇闪卡
-    inner = data.vocab.map((v,i) => `
-      <div class="flashcard" onclick="this.classList.toggle('flipped')">
-        <div class="fc-front">${v.en}</div>
-        <div class="fc-back">${v.zh}</div>
-        <div class="fc-hint">点击翻转查看释义 · ${i+1}/${data.vocab.length}</div>
-      </div>
-    `).join('');
-  } else if (idx === 2) {
-    // 听力练习
-    inner = `<div class="listening-bar" onclick="showToast('🎧 播放听力录音...')"><div class="lb-play">▶</div><div class="lb-info"><div class="lb-title">Section 2 - 校园地图题</div><div class="lb-sub">点击播放音频</div></div></div>`;
-    inner += data.questions.map((q,i) => `
-      <div class="card" style="margin-bottom:8px;">
-        <div style="font-size:14px;font-weight:600;margin-bottom:8px;">Q${i+1}. ${q.q}</div>
-        ${q.opts.map(o => `<div class="question-opt" onclick="showToast('${o===q.a ? '✅ 正确！' : '❌ 正确答案是：'+q.a}')"><span class="opt-letter">${String.fromCharCode(65+data.questions[0].opts.indexOf(o))}</span> ${o}</div>`).join('')}
-      </div>
-    `).join('');
-  } else if (idx === 3) {
-    // 写作
-    inner = `<div class="card" style="margin-bottom:8px;"><div style="font-size:13px;font-weight:600;margin-bottom:6px;">📝 随机话题</div><div style="font-size:14px;color:var(--text-main);line-height:1.6;">${data.topics[0]}</div></div>`;
-    inner += `<div class="card"><div style="font-size:13px;font-weight:600;margin-bottom:6px;">💡 写作结构建议</div><div style="font-size:12px;color:var(--text-secondary);white-space:pre-line;line-height:1.6;">${data.tips}</div></div>`;
-  } else if (idx === 4) {
-    // 口语
-    inner = data.cards.map(c => `
-      <div class="flashcard" onclick="this.classList.toggle('flipped')">
-        <div class="fc-front">${c.topic}</div>
-        <div class="fc-back" style="text-align:left;font-size:12px;">提示：${c.hints.join(' · ')}</div>
-        <div class="fc-hint">点击翻转查看提示</div>
-      </div>
-    `).join('');
-    inner += `<div style="font-size:11px;color:var(--text-light);text-align:center;margin-top:8px;">⏱ 准备1分钟 → 讲述2分钟</div>`;
-  } else if (idx === 5) {
-    // 阅读
-    inner = data.passages.map((p,i) => `
-      <div class="card" style="margin-bottom:8px;">
-        <div style="font-size:14px;font-weight:700;margin-bottom:6px;">📖 ${p.title}</div>
-        <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;">${p.content}</div>
-        <div style="font-size:13px;font-weight:600;margin-bottom:4px;">❓ ${p.q}</div>
-        <div class="question-opt" onclick="showToast('${p.a === '正确答案' ? '✅ 正确！' : '✅ 正确答案：' + p.a}')"><span class="opt-letter">A</span> ${p.a}</div>
-      </div>
-    `).join('');
+  const stage = state.engStage || 'basic';
+  const data = engStageData[stage];
+  let inner = '', title = '', bilibiliKW = data.bilibili;
+  
+  if (stage === 'basic') {
+    if (idx === 1) {
+      title = '🔤 今日基础单词';
+      inner = data.vocab.map((v,i) => `<div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="fc-front">${v.en} <span style="font-size:10px;opacity:0.6;">${v.phonetic}</span></div><div class="fc-back">${v.zh}</div><div class="fc-hint">点击翻转 · ${i+1}/${data.vocab.length}</div></div>`).join('');
+      bilibiliKW = '英语零基础单词 入门词汇';
+    } else if (idx === 2) {
+      title = '🎧 慢速英语听力';
+      const l = data.listening[Math.floor(Math.random()*data.listening.length)];
+      inner = `<div class="listening-bar" onclick="showToast('🎧 请在B站搜索慢速英语进行听力练习')"><div class="lb-play">▶</div><div class="lb-info"><div class="lb-title">${l.title}</div><div class="lb-sub">${l.sub}</div></div></div><div style="font-size:12px;color:var(--text-light);text-align:center;margin-top:8px;">💡 点击下方B站按钮看视频学习</div>`;
+      bilibiliKW = l.kw;
+    } else if (idx === 3) {
+      title = '📝 英文日记练习';
+      const w = data.writing[Math.floor(Math.random()*data.writing.length)];
+      inner = `<div class="card" style="margin-bottom:8px;"><div style="font-size:14px;font-weight:600;margin-bottom:6px;">📝 ${w.topic}</div></div><div class="card" style="background:#f0fff4;"><div style="font-size:12px;font-weight:600;margin-bottom:4px;">💡 参考例句</div><div style="font-size:12px;color:var(--text-secondary);line-height:1.8;">${w.example}</div></div><div style="font-size:11px;color:var(--text-light);text-align:center;margin-top:8px;">用笔在纸上写下来，每天坚持就会进步！</div>`;
+    } else if (idx === 4) {
+      title = '🗣️ 日常口语跟读';
+      inner = data.speaking.map((s,i) => `<div class="card" style="margin-bottom:6px;padding:10px 12px;"><div style="font-size:14px;font-weight:600;color:#ff6b9d;">${s.en}</div><div style="font-size:12px;color:var(--text-secondary);margin:4px 0;">${s.zh}</div><div style="font-size:11px;color:var(--text-light);">→ 回答：${s.reply}</div></div>`).join('');
+      inner += `<div style="font-size:11px;color:var(--text-light);text-align:center;margin-top:8px;">💡 大声读出来！每天跟读5句</div>`;
+    } else if (idx === 5) {
+      title = '📺 英语学习视频';
+      inner = `<div style="text-align:center;padding:20px;"><div style="font-size:48px;margin-bottom:12px;">📺</div><div style="font-size:14px;font-weight:600;">点击下方按钮跳转B站学习</div><div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">推荐搜索：英语零基础入门</div></div>`;
+    }
+  } else if (stage === 'cet4') {
+    if (idx === 6) {
+      title = '📝 四级高频词';
+      inner = data.vocab.map((v,i) => `<div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="fc-front">${v.en} <span style="font-size:10px;opacity:0.6;">${v.phonetic}</span></div><div class="fc-back">${v.zh}</div><div class="fc-hint">点击翻转 · ${i+1}/${data.vocab.length}</div></div>`).join('');
+      bilibiliKW = '四级高频词汇';
+    } else if (idx === 7) {
+      title = '👂 四级听力真题';
+      const l = data.listening[0];
+      inner = `<div class="listening-bar" onclick="showToast('🎧 请在B站搜索四级听力真题练习')"><div class="lb-play">▶</div><div class="lb-info"><div class="lb-title">${l.title}</div><div class="lb-sub">${l.sub}</div></div></div>`;
+      bilibiliKW = l.kw;
+    } else if (idx === 8) {
+      title = '📖 四级阅读真题';
+      const r = data.reading[0];
+      inner = `<div class="card" style="margin-bottom:8px;"><div style="font-size:14px;font-weight:700;margin-bottom:6px;">📖 ${r.title}</div><div style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;">${r.content}</div><div style="font-size:13px;font-weight:600;margin-bottom:4px;">❓ ${r.q}</div>${r.opts.map((o,i) => `<div class="question-opt" onclick="showToast('${i===r.ans ? '✅ 正确！' : '❌ 正确答案是：'+r.opts[r.ans]}')"><span class="opt-letter">${String.fromCharCode(65+i)}</span> ${o}</div>`).join('')}</div>`;
+      bilibiliKW = '四级阅读真题讲解';
+    } else if (idx === 9) {
+      title = '✍️ 四级翻译练习';
+      const t = data.translation[0];
+      inner = `<div class="card" style="margin-bottom:8px;background:#fff8e1;"><div style="font-size:12px;font-weight:600;margin-bottom:4px;color:#f57c00;">🇨🇳 请翻译以下内容</div><div style="font-size:14px;line-height:1.8;color:var(--text-main);">${t.cn}</div></div><div class="card" style="background:#f0fff4;"><div style="font-size:12px;font-weight:600;margin-bottom:4px;color:#2e7d32;">✅ 参考答案</div><div style="font-size:13px;line-height:1.8;color:var(--text-secondary);">${t.en}</div></div>`;
+      bilibiliKW = '四级翻译技巧';
+    } else if (idx === 10) {
+      title = '📺 四级备考视频';
+      inner = `<div style="text-align:center;padding:20px;"><div style="font-size:48px;">📺</div><div style="font-size:14px;font-weight:600;">四级备考全套攻略</div></div>`;
+    }
+  } else if (stage === 'cet6') {
+    if (idx === 11) {
+      title = '📝 六级核心词';
+      inner = data.vocab.map((v,i) => `<div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="fc-front">${v.en} <span style="font-size:10px;opacity:0.6;">${v.phonetic}</span></div><div class="fc-back">${v.zh}</div><div class="fc-hint">点击翻转 · ${i+1}/${data.vocab.length}</div></div>`).join('');
+      bilibiliKW = '六级核心词汇';
+    } else if (idx === 12) {
+      title = '👂 六级听力真题';
+      const l = data.listening[0];
+      inner = `<div class="listening-bar" onclick="showToast('🎧 请在B站搜索六级听力真题')"><div class="lb-play">▶</div><div class="lb-info"><div class="lb-title">${l.title}</div><div class="lb-sub">${l.sub}</div></div></div>`;
+      bilibiliKW = l.kw;
+    } else if (idx === 13) {
+      title = '📖 六级长篇阅读';
+      const r = data.reading[0];
+      inner = `<div class="card" style="margin-bottom:8px;"><div style="font-size:14px;font-weight:700;margin-bottom:6px;">📖 ${r.title}</div><div style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;">${r.content}</div><div style="font-size:13px;font-weight:600;margin-bottom:4px;">❓ ${r.q}</div>${r.opts.map((o,i) => `<div class="question-opt" onclick="showToast('${i===r.ans ? '✅ 正确！' : '❌ 正确答案是：'+r.opts[r.ans]}')"><span class="opt-letter">${String.fromCharCode(65+i)}</span> ${o}</div>`).join('')}</div>`;
+      bilibiliKW = '六级阅读真题讲解';
+    } else if (idx === 14) {
+      title = '✍️ 六级写作模板';
+      const t = data.translation[0];
+      inner = `<div class="card" style="margin-bottom:8px;background:#fff8e1;"><div style="font-size:12px;font-weight:600;margin-bottom:4px;color:#f57c00;">🇨🇳 翻译练习</div><div style="font-size:14px;line-height:1.8;">${t.cn}</div></div><div class="card" style="background:#f0fff4;"><div style="font-size:12px;font-weight:600;margin-bottom:4px;color:#2e7d32;">✅ 参考答案</div><div style="font-size:13px;line-height:1.8;color:var(--text-secondary);">${t.en}</div></div>`;
+      bilibiliKW = '六级写作模板';
+    } else if (idx === 15) {
+      title = '📺 六级备考视频';
+      inner = `<div style="text-align:center;padding:20px;"><div style="font-size:48px;">📺</div><div style="font-size:14px;font-weight:600;">六级备考全套攻略</div></div>`;
+    }
+  } else if (stage === 'ielts') {
+    if (idx === 16) {
+      title = '📝 雅思核心词';
+      inner = data.vocab.map((v,i) => `<div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="fc-front">${v.en} <span style="font-size:10px;opacity:0.6;">${v.phonetic}</span></div><div class="fc-back">${v.zh}</div><div class="fc-hint">点击翻转 · ${i+1}/${data.vocab.length}</div></div>`).join('');
+      bilibiliKW = '雅思核心词汇';
+    } else if (idx === 17) {
+      title = '👂 雅思听力';
+      const l = data.listening[0];
+      inner = `<div class="listening-bar" onclick="showToast('🎧 请在B站搜索雅思听力真题')"><div class="lb-play">▶</div><div class="lb-info"><div class="lb-title">${l.title}</div><div class="lb-sub">${l.sub}</div></div></div>`;
+      bilibiliKW = l.kw;
+    } else if (idx === 18) {
+      title = '📖 雅思阅读';
+      const r = data.reading[0];
+      inner = `<div class="card" style="margin-bottom:8px;"><div style="font-size:14px;font-weight:700;margin-bottom:6px;">📖 ${r.title}</div><div style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;">${r.content}</div><div style="font-size:13px;font-weight:600;margin-bottom:4px;">❓ ${r.q}</div>${r.opts.map((o,i) => `<div class="question-opt" onclick="showToast('${i===r.ans ? '✅ 正确！' : '❌ 正确答案是：'+r.opts[r.ans]}')"><span class="opt-letter">${String.fromCharCode(65+i)}</span> ${o}</div>`).join('')}</div>`;
+      bilibiliKW = '雅思阅读真题精讲';
+    } else if (idx === 19) {
+      title = '✍️ 雅思写作';
+      const w = data.writing[Math.floor(Math.random()*data.writing.length)];
+      inner = `<div class="card" style="margin-bottom:8px;"><div style="font-size:14px;font-weight:600;margin-bottom:6px;">📝 ${w.task}</div></div><div class="card" style="background:#f0fff4;"><div style="font-size:12px;font-weight:600;margin-bottom:4px;">💡 写作结构</div><div style="font-size:12px;color:var(--text-secondary);white-space:pre-line;line-height:1.8;">${w.tips}</div></div>`;
+      bilibiliKW = '雅思写作真题';
+    } else if (idx === 20) {
+      title = '🗣️ 雅思口语';
+      const s = data.speaking[Math.floor(Math.random()*data.speaking.length)];
+      inner = `<div class="flashcard" onclick="this.classList.toggle('flipped')"><div class="fc-front">${s.topic}</div><div class="fc-back" style="text-align:left;font-size:12px;">提示：${s.hints}</div><div class="fc-hint">点击翻转查看提示 · 准备1分钟 → 讲2分钟</div></div>`;
+      bilibiliKW = '雅思口语话题';
+    }
   }
 
-  const bilibiliKW = {
-    1: '雅思核心词汇背诵',
-    2: '雅思听力真题练习',
-    3: '雅思写作Task2',
-    4: '雅思口语Part2',
-    5: '雅思阅读真题精讲',
-  };
-
   document.getElementById('modalContent').innerHTML = `
-    <div class="modal-title">${data.title}</div>
-    <div class="modal-subtitle">完成下方训练内容后，点击「完成训练」划掉任务</div>
-    <a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(bilibiliKW[idx])}" target="_blank" rel="noopener" style="text-decoration:none;display:block;margin-bottom:10px;">
+    <div class="modal-title">${title}</div>
+    <a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(bilibiliKW)}" target="_blank" rel="noopener" style="text-decoration:none;display:block;margin-bottom:10px;">
       <button class="btn btn-primary btn-block" style="background:#fb7299;box-shadow:0 4px 14px rgba(251,114,153,0.4);">🎬 在哔哩哔哩学习</button>
     </a>
     ${inner}
     <div class="modal-btn-row">
       <button class="btn btn-outline btn-sm" style="flex:1;" onclick="closeModal()">关闭</button>
-      <button class="btn btn-primary btn-sm" style="flex:1;" onclick="completeEng(${idx})" ${done ? 'disabled' : ''}>${done ? '✅ 已完成' : '完成训练 ✅'}</button>
+      <button class="btn btn-primary btn-sm" style="flex:1;" onclick="completeEng(${idx})">✅ 完成训练</button>
     </div>
   `;
   document.getElementById('modalOverlay').style.display = 'flex';
@@ -1879,14 +2217,16 @@ function completeEng(idx) {
   state.engDone[idx - 1] = true;
   saveState();
   const el = document.getElementById('eng' + idx);
+  if (!el) { closeModal(); return; }
   const cb = el.querySelector('.checkbox-custom');
   cb.classList.add('checked'); cb.textContent = '✓'; el.classList.add('done');
+  updateAllGridStatus();
   if (state.dashboardActive) updateDashboardProgress();
   showToast('🎉 训练完成！');
   closeModal();
 }
 
-// ========== 驾驶考试 ==========
+// ========== 驾驶考试 ==========// ========== 驾驶考试 ==========
 function initDriveQuestions() {
   // 科目一C1标准题库 - 184道真题（驾考宝典/超级教练同款）
 state.driveQuestions = [
@@ -2476,14 +2816,18 @@ function restoreUI() {
   const reviewDoneEl = document.getElementById('reviewDone');
   if (reviewDoneEl) reviewDoneEl.textContent = state.reviewDone.filter(Boolean).length;
 
-  // 7. 恢复英语雅思勾选
+  // 7. 恢复英语学习状态
   state.engDone.forEach((done, i) => {
     const el = document.getElementById('eng' + (i + 1));
     if (el && done) {
       const cb = el.querySelector('.checkbox-custom');
-      cb.classList.add('checked'); cb.textContent = '✓'; el.classList.add('done');
+      if (cb) { cb.classList.add('checked'); cb.textContent = '✓'; el.classList.add('done'); }
     }
   });
+  // 恢复英语阶段选择
+  const engStage = state.engStage || 'basic';
+  const engTag = document.querySelector(`[data-stage="${engStage}"]`);
+  if (engTag) switchEngStage(engStage, engTag);
 
   // 8. 恢复驾考状态
   document.querySelectorAll('.drive-category-tabs .tag').forEach(t => {
