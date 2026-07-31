@@ -761,6 +761,18 @@
     <!-- ===== 页面2：每日计划（待办清单） ===== -->
     <div class="page" id="page-todo" style="display:none;">
       <div class="page-title">📋 每日计划</div>
+      <!-- 上班状态提示 -->
+      <div class="card" id="workStatusCard" style="margin-bottom:12px;padding:12px 14px;display:none;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="font-size:28px;" id="workStatusEmoji">💼</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:700;" id="workStatusText">工作中</div>
+            <div style="font-size:11px;color:var(--text-secondary);" id="workStatusSub">当前是上班时间，先专心工作吧~</div>
+          </div>
+          <div style="font-size:12px;color:var(--text-light);" id="workStatusTime">9:00-18:00</div>
+        </div>
+      </div>
+      <div id="todoWorkArea">
       <div class="todo-input-row">
         <input class="input" id="todoInput" placeholder="添加今日待办..." onkeydown="if(event.key==='Enter')addTodo()">
         <button class="btn btn-primary" onclick="addTodo()">添加</button>
@@ -781,6 +793,16 @@
         <div class="empty-state" id="todoEmpty">
           <div class="empty-emoji">📝</div>
           <div class="empty-text">暂无待办事项</div>
+        </div>
+      </div>
+      </div><!-- /todoWorkArea -->
+      <!-- 上班时显示的提示 -->
+      <div id="todoWorkBlock" style="display:none;text-align:center;padding:40px 20px;">
+        <div style="font-size:48px;margin-bottom:12px;">💼</div>
+        <div style="font-size:16px;font-weight:700;margin-bottom:8px;">上班时间，专心工作吧！</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">
+          下班后再来安排每日计划哦~<br>
+          <span id="todoWorkBlockTime" style="color:#ff6b9d;font-weight:600;"></span>
         </div>
       </div>
     </div>
@@ -2534,10 +2556,98 @@ function startDayWatcher() {
   }, 60000);
 }
 
+// ========== 上班时间智能调度 ==========
+// 轮班制：一周早班(9-18)，一周晚班(12-20:30)，每周交替
+// 基准：2026-01-05(周一)所在周 = 早班周
+const SHIFT_BASE_DATE = new Date(2026, 0, 5);
+
+function getCurrentShift() {
+  const now = new Date();
+  const diffMs = now - SHIFT_BASE_DATE;
+  const diffWeeks = Math.floor(diffMs / (7 * 24 * 60 * 60 * 1000));
+  return (diffWeeks % 2 === 0) ? 'morning' : 'evening';
+}
+
+function getWorkTime() {
+  const shift = getCurrentShift();
+  return shift === 'morning'
+    ? { startH: 9, startM: 0, endH: 18, endM: 0, label: '早班 9:00-18:00' }
+    : { startH: 12, startM: 0, endH: 20, endM: 30, label: '晚班 12:00-20:30' };
+}
+
+function isWorkingTime() {
+  const wt = getWorkTime();
+  const now = new Date();
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const startMin = wt.startH * 60 + wt.startM;
+  const endMin = wt.endH * 60 + wt.endM;
+  return nowMin >= startMin && nowMin < endMin;
+}
+
+function updateWorkStatus() {
+  const working = isWorkingTime();
+  const wt = getWorkTime();
+  const shift = getCurrentShift();
+  const shiftLabel = shift === 'morning' ? '☀️ 早班周' : '🌙 晚班周';
+  const statusCard = document.getElementById('workStatusCard');
+  const workArea = document.getElementById('todoWorkArea');
+  const workBlock = document.getElementById('todoWorkBlock');
+  const emoji = document.getElementById('workStatusEmoji');
+  const text = document.getElementById('workStatusText');
+  const sub = document.getElementById('workStatusSub');
+  const time = document.getElementById('workStatusTime');
+
+  if (working) {
+    if (workArea) workArea.style.display = 'none';
+    if (workBlock) {
+      workBlock.style.display = 'block';
+      const bt = document.getElementById('todoWorkBlockTime');
+      if (bt) {
+        const now = new Date();
+        const endMin = wt.endH * 60 + wt.endM;
+        const r = endMin - (now.getHours() * 60 + now.getMinutes());
+        bt.textContent = `还有 ${Math.floor(r/60)}小时${r%60}分钟下班，下班后记得来哦~`;
+      }
+    }
+    if (statusCard) {
+      statusCard.style.display = 'block';
+      statusCard.style.background = 'linear-gradient(135deg, #e8f0fe, #d4e4ff)';
+      if (emoji) emoji.textContent = '💼';
+      if (text) text.textContent = '工作中';
+      if (sub) sub.textContent = shiftLabel + ' · 上班时间，先专心工作~';
+      if (time) time.textContent = wt.label;
+    }
+  } else {
+    if (workArea) workArea.style.display = 'block';
+    if (workBlock) workBlock.style.display = 'none';
+    if (statusCard) {
+      statusCard.style.display = 'block';
+      statusCard.style.background = 'linear-gradient(135deg, #f0fff4, #d4f5e0)';
+      if (emoji) emoji.textContent = '🎯';
+      if (text) text.textContent = '自由时间';
+      const now = new Date();
+      const nowMin = now.getHours() * 60 + now.getMinutes();
+      const startMin = wt.startH * 60 + wt.startM;
+      if (nowMin < startMin) {
+        const r = startMin - nowMin;
+        if (sub) sub.textContent = shiftLabel + ` · 距上班还有 ${Math.floor(r/60)}小时${r%60}分钟，抓紧安排！`;
+      } else {
+        if (sub) sub.textContent = shiftLabel + ' · 下班啦，来完成每日计划吧！';
+      }
+      if (time) time.textContent = '自由安排';
+    }
+  }
+
+  if (!window._workStatusTimer) {
+    window._workStatusTimer = setInterval(updateWorkStatus, 60000);
+  }
+}
+
 // 执行恢复
 restoreUI();
 updateDateDisplay();
 startDayWatcher();
+updateWorkStatus(); // 初始化上班状态
 
 // ========== 重置今日数据并刷新页面 ==========
 function resetTodayAndRefresh() {
