@@ -150,9 +150,13 @@
     flex-direction: column;
     align-items: center;
     gap: 1px;
+    flex-shrink: 0;
+    min-height: 0;
   }
-  .nav-top { padding-top: 2px; }
-  .nav-bottom { padding-bottom: 4px; }
+  .nav-bottom {
+    padding-bottom: 4px;
+    margin-top: auto; /* 将底部导航推到底部 */
+  }
   .nav-item {
     width: 48px;
     height: 52px;
@@ -543,10 +547,16 @@
   }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   .modal-sheet {
-    background: #fff; width: 100%; max-width: 430px; max-height: 85dvh;
-    border-radius: 24px 24px 0 0; padding: 24px 18px calc(var(--safe-area-bottom) + 20px);
+    background: #fff; width: 100%; max-width: 430px; max-height: 78dvh;
+    border-radius: 24px 24px 0 0; padding: 18px 18px calc(var(--safe-area-bottom) + 24px);
     animation: slideUp 0.35s cubic-bezier(0.16,1,0.3,1);
     overflow-y: auto; -webkit-overflow-scrolling: touch;
+    display: flex; flex-direction: column;
+  }
+  .modal-scroll-area {
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    flex: 1; min-height: 0;
+    padding-right: 4px;
   }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
   .modal-sheet::-webkit-scrollbar { width: 0; }
