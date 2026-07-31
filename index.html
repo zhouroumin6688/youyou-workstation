@@ -1364,7 +1364,20 @@
             </div>
           </div>
         </div>
+        </div>
       </div>
+      <!-- 自定义添加任务 -->
+      <div id="engCustomForm" style="display:none;margin-top:8px;">
+        <div class="card" style="padding:12px;">
+          <input class="input" id="engCustomTitle" placeholder="任务名称（如：背不规则动词表）" style="margin-bottom:6px;">
+          <input class="input" id="engCustomLink" placeholder="B站搜索关键词（如：不规则动词）" style="margin-bottom:6px;">
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-primary btn-sm" style="flex:1;" onclick="addEngCustomTask()">✅ 添加</button>
+            <button class="btn btn-outline btn-sm" style="flex:1;" onclick="document.getElementById('engCustomForm').style.display='none'">取消</button>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-outline btn-block" onclick="document.getElementById('engCustomForm').style.display='block';document.getElementById('engCustomTitle').focus()">+ 添加自定义任务</button>
     </div>
 
     <!-- ===== 页面9：看电影或纪录片 ===== -->
@@ -1373,38 +1386,30 @@
       <div class="card card-pink">
         <div style="display:flex;justify-content:space-between;align-items:center;">
           <div>
-            <div style="font-size:13px;opacity:0.85;">本月观影</div>
-            <div style="font-size:28px;font-weight:800;">5 部</div>
+            <div style="font-size:13px;opacity:0.85;">已看完</div>
+            <div style="font-size:28px;font-weight:800;" id="movieWatched">0 部</div>
           </div>
           <div style="text-align:right;">
-            <div style="font-size:13px;opacity:0.85;">年度目标</div>
-            <div style="font-size:28px;font-weight:800;">50 部</div>
+            <div style="font-size:13px;opacity:0.85;">待看</div>
+            <div style="font-size:28px;font-weight:800;" id="moviePending">0 部</div>
           </div>
         </div>
       </div>
-      <div class="section-title">🎯 待看清单</div>
-      <div class="media-card" id="movieCard0" onclick="openMovieModal(0)">
-        <div class="mc-banner" style="background:linear-gradient(135deg,#ff8fab,#ff6b9d);">🎥</div>
-        <div class="mc-body">
-          <div class="mc-title">🎬 阿甘正传</div>
-          <div class="mc-desc">经典励志 · 汤姆·汉克斯主演 · 豆瓣9.5</div>
+      <div class="section-title">🎯 我的观影清单</div>
+      <div id="movieList"></div>
+      <!-- 添加表单 -->
+      <div id="movieAddForm" style="display:none;">
+        <div class="card" style="margin-bottom:8px;padding:14px;">
+          <input class="input" id="movieAddTitle" placeholder="电影/纪录片名称" style="margin-bottom:8px;">
+          <input class="input" id="movieAddDesc" placeholder="一句话描述（如：豆瓣9.5·励志）" style="margin-bottom:8px;">
+          <input class="input" id="movieAddYear" placeholder="年份（如：2024）" style="margin-bottom:8px;">
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-primary btn-sm" style="flex:1;" onclick="addMovie()">✅ 添加</button>
+            <button class="btn btn-outline btn-sm" style="flex:1;" onclick="document.getElementById('movieAddForm').style.display='none'">取消</button>
+          </div>
         </div>
       </div>
-      <div class="media-card" id="movieCard1" onclick="openMovieModal(1)">
-        <div class="mc-banner" style="background:linear-gradient(135deg,#ffb6c1,#ff8fab);">🌍</div>
-        <div class="mc-body">
-          <div class="mc-title">📺 蓝色星球 II</div>
-          <div class="mc-desc">BBC纪录片 · 海洋自然 · 豆瓣9.8</div>
-        </div>
-      </div>
-      <div class="media-card" id="movieCard2" onclick="openMovieModal(2)">
-        <div class="mc-banner" style="background:linear-gradient(135deg,#ffc0cb,#ffb6c1);">💫</div>
-        <div class="mc-body">
-          <div class="mc-title">🎬 千与千寻</div>
-          <div class="mc-desc">宫崎骏动画 · 治愈成长 · 豆瓣9.4</div>
-        </div>
-      </div>
-      <button class="btn btn-outline btn-block" onclick="showToast('添加新片到清单 🎬')">+ 添加观影</button>
+      <button class="btn btn-outline btn-block" onclick="document.getElementById('movieAddForm').style.display='block';document.getElementById('movieAddTitle').focus()">+ 添加想看的电影</button>
     </div>
 
     <!-- ===== 页面10：易经八字养生 ===== -->
@@ -1489,6 +1494,7 @@ const defaultState = {
   reviewDone: [false,false,false,false,false],
   engDone: [false,false,false,false,false],
   engStage: 'basic',
+  engCustomTasks: [],
   driveSubject: 'all',
   driveIndex: 0,
   driveAnswers: {},
@@ -1533,6 +1539,7 @@ function saveState() {
       reviewDone: state.reviewDone,
       engDone: state.engDone,
       engStage: state.engStage,
+      engCustomTasks: state.engCustomTasks,
       driveSubject: state.driveSubject,
       driveIndex: state.driveIndex,
       driveAnswers: state.driveAnswers,
@@ -2084,6 +2091,71 @@ function switchEngStage(stage, el) {
   document.getElementById('engStageLabel').textContent = engStageData[stage].label;
 }
 
+function addEngCustomTask() {
+  const title = document.getElementById('engCustomTitle').value.trim();
+  const link = document.getElementById('engCustomLink').value.trim();
+  if (!title) { showToast('请输入任务名称'); return; }
+  if (!state.engCustomTasks) state.engCustomTasks = [];
+  state.engCustomTasks.push({ title, link: link || title, done: false });
+  document.getElementById('engCustomTitle').value = '';
+  document.getElementById('engCustomLink').value = '';
+  document.getElementById('engCustomForm').style.display = 'none';
+  renderEngCustomTasks();
+  saveState();
+  showToast('✅ 已添加自定义任务');
+}
+
+function renderEngCustomTasks() {
+  const container = document.getElementById('engCustomList');
+  if (!container) return;
+  const tasks = state.engCustomTasks || [];
+  if (tasks.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+  container.innerHTML = '<div class="section-title" style="margin-top:8px;">✏️ 自定义任务</div>' + tasks.map((t, i) => `
+    <div class="checkbox-item" style="border:none;margin:0;padding:8px 0;${t.done?'opacity:0.5;':''}" onclick="openEngCustomModal(${i})">
+      <div class="checkbox-custom ${t.done?'checked':''}" onclick="event.stopPropagation();toggleEngCustom(${i})">${t.done?'✓':''}</div>
+      <div class="checkbox-info">
+        <div class="checkbox-text" style="${t.done?'text-decoration:line-through;':''}">${t.title}</div>
+        <div class="checkbox-note">点击查看 →</div>
+      </div>
+      <span style="font-size:16px;cursor:pointer;padding:4px;" onclick="event.stopPropagation();deleteEngCustom(${i})">🗑️</span>
+    </div>
+  `).join('');
+}
+
+function toggleEngCustom(idx) {
+  if (!state.engCustomTasks) return;
+  state.engCustomTasks[idx].done = !state.engCustomTasks[idx].done;
+  saveState();
+  renderEngCustomTasks();
+}
+
+function deleteEngCustom(idx) {
+  if (!confirm('确定删除这个任务吗？')) return;
+  state.engCustomTasks.splice(idx, 1);
+  saveState();
+  renderEngCustomTasks();
+  showToast('🗑️ 已删除');
+}
+
+function openEngCustomModal(idx) {
+  const t = state.engCustomTasks[idx];
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-title">${t.title}</div>
+    <div style="font-size:13px;color:var(--text-secondary);text-align:center;margin-bottom:10px;">自定义学习任务</div>
+    <a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(t.link)}" target="_blank" rel="noopener" style="text-decoration:none;display:block;margin-bottom:10px;">
+      <button class="btn btn-primary btn-block" style="background:#fb7299;box-shadow:0 4px 14px rgba(251,114,153,0.4);">🎬 在哔哩哔哩学习</button>
+    </a>
+    <div class="modal-btn-row">
+      <button class="btn btn-outline btn-sm" style="flex:1;" onclick="deleteEngCustom(${idx});closeModal()">🗑️ 删除</button>
+      <button class="btn btn-primary btn-sm" style="flex:1;" onclick="toggleEngCustom(${idx});closeModal();showToast(t.done?'🔄 已标为未完成':'✅ 已完成！')">${t.done ? '🔄 标为未完成' : '✅ 完成训练'}</button>
+    </div>
+  `;
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+
 function toggleEng(idx) {
   state.engDone[idx - 1] = !state.engDone[idx - 1];
   saveState();
@@ -2564,42 +2636,99 @@ function showToast(msg) {
 }
 
 // ========== 观影纪录弹窗 ==========
-const movieData = [
-  { title: '阿甘正传', year: '1994', rating: '9.5', director: '罗伯特·泽米吉斯', cast: '汤姆·汉克斯', genre: '剧情/励志', desc: '一个智商只有75的男孩阿甘，凭借自己的坚持和善良，跑出了不平凡的人生。他见证了美国几十年的历史变迁，从越战到乒乓外交，从苹果公司到跑步横穿美国。', poster: '🎥', color: 'linear-gradient(135deg,#ff8fab,#ff6b9d)' },
-  { title: '蓝色星球 II', year: '2017', rating: '9.8', director: 'BBC', cast: '大卫·爱登堡', genre: '纪录片/自然', desc: 'BBC历时4年拍摄的海洋纪录片，从热带珊瑚礁到冰封两极，探索深海未知生物。每一帧都美到窒息，让你重新认识这个蓝色星球。', poster: '🌍', color: 'linear-gradient(135deg,#ffb6c1,#ff8fab)' },
-  { title: '千与千寻', year: '2001', rating: '9.4', director: '宫崎骏', cast: '柊瑠美', genre: '动画/奇幻/治愈', desc: '10岁女孩千寻和父母误入神灵世界，父母因贪吃变成猪，千寻为了拯救父母，在汤婆婆的汤屋中工作。这是宫崎骏最伟大的作品，关于成长、勇气和记住自己的名字。', poster: '💫', color: 'linear-gradient(135deg,#ffc0cb,#ffb6c1)' },
+// ========== 电影模块（动态列表+本地存储）==========
+const defaultMovies = [
+  { title: '阿甘正传', desc: '经典励志 · 汤姆·汉克斯主演 · 豆瓣9.5', year: '1994', emoji: '🎥', watched: false },
+  { title: '蓝色星球 II', desc: 'BBC纪录片 · 海洋自然 · 豆瓣9.8', year: '2017', emoji: '🌍', watched: false },
+  { title: '千与千寻', desc: '宫崎骏动画 · 治愈成长 · 豆瓣9.4', year: '2001', emoji: '💫', watched: false },
 ];
 
+function loadMovies() {
+  try {
+    const saved = localStorage.getItem('youyou_movies');
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  // 首次使用，合并默认电影
+  state.movieList = [...defaultMovies];
+  saveMovies();
+  return state.movieList;
+}
+
+function saveMovies() {
+  localStorage.setItem('youyou_movies', JSON.stringify(state.movieList || []));
+}
+
+function renderMovieList() {
+  const list = document.getElementById('movieList');
+  const movies = state.movieList || [];
+  if (movies.length === 0) {
+    list.innerHTML = '<div class="empty-state"><div class="empty-emoji">🎬</div><div class="empty-text">还没有添加电影</div><div class="empty-sub" style="font-size:11px;color:var(--text-light);">点击下方按钮添加想看的电影吧~</div></div>';
+  } else {
+    list.innerHTML = movies.map((m, i) => `
+      <div class="media-card" style="${m.watched?'opacity:0.45;':''}" onclick="openMovieModal(${i})">
+        <div class="mc-banner" style="background:linear-gradient(135deg,#ff8fab,#ff6b9d);">${m.emoji||'🎬'}</div>
+        <div class="mc-body">
+          <div class="mc-title" style="${m.watched?'text-decoration:line-through;':''}">${m.emoji||'🎬'} ${m.title}</div>
+          <div class="mc-desc">${m.desc||''} ${m.year ? '· '+m.year : ''}</div>
+          ${m.watched ? '<div style="font-size:10px;color:#2e7d32;margin-top:2px;">✅ 已看完</div>' : ''}
+        </div>
+        <span style="font-size:18px;cursor:pointer;padding:4px 8px;" onclick="event.stopPropagation();deleteMovie(${i})">🗑️</span>
+      </div>
+    `).join('');
+  }
+  // 更新统计
+  const watched = movies.filter(m => m.watched).length;
+  document.getElementById('movieWatched').textContent = watched + ' 部';
+  document.getElementById('moviePending').textContent = (movies.length - watched) + ' 部';
+  saveMovies();
+}
+
+function addMovie() {
+  const title = document.getElementById('movieAddTitle').value.trim();
+  if (!title) { showToast('请输入电影名称'); return; }
+  const desc = document.getElementById('movieAddDesc').value.trim();
+  const year = document.getElementById('movieAddYear').value.trim();
+  if (!state.movieList) state.movieList = [];
+  state.movieList.push({ title, desc, year, emoji: '🎬', watched: false });
+  document.getElementById('movieAddTitle').value = '';
+  document.getElementById('movieAddDesc').value = '';
+  document.getElementById('movieAddYear').value = '';
+  document.getElementById('movieAddForm').style.display = 'none';
+  renderMovieList();
+  showToast('✅ 已添加：' + title);
+}
+
+function deleteMovie(idx) {
+  const m = state.movieList[idx];
+  if (!confirm('确定删除「' + m.title + '」吗？')) return;
+  state.movieList.splice(idx, 1);
+  renderMovieList();
+  showToast('🗑️ 已删除');
+}
+
 function openMovieModal(idx) {
-  const m = movieData[idx];
+  const m = state.movieList[idx];
   document.getElementById('modalContent').innerHTML = `
-    <div class="movie-poster" style="background:${m.color};">${m.poster}</div>
-    <div class="modal-title">${m.poster} ${m.title}</div>
-    <div class="movie-info-row">
-      <div class="mi-item"><div class="mi-val">${m.rating}</div><div class="mi-label">豆瓣评分</div></div>
-      <div class="mi-item"><div class="mi-val">${m.year}</div><div class="mi-label">年份</div></div>
-      <div class="mi-item"><div class="mi-val">${m.genre}</div><div class="mi-label">类型</div></div>
-    </div>
-    <div class="movie-desc">${m.desc}</div>
-    <div style="font-size:12px;color:var(--text-light);margin-bottom:12px;">🎬 导演：${m.director} ｜ 👤 主演：${m.cast}</div>
+    <div class="movie-poster" style="background:linear-gradient(135deg,#ff8fab,#ff6b9d);">${m.emoji||'🎬'}</div>
+    <div class="modal-title">${m.emoji||'🎬'} ${m.title}</div>
+    ${m.year ? `<div style="text-align:center;font-size:13px;color:var(--text-secondary);margin-bottom:8px;">📅 ${m.year}</div>` : ''}
+    ${m.desc ? `<div class="movie-desc">${m.desc}</div>` : ''}
     <a href="https://search.bilibili.com/all?keyword=${encodeURIComponent(m.title)}" target="_blank" rel="noopener" style="text-decoration:none;display:block;margin-bottom:10px;">
-      <button class="btn btn-primary btn-block" style="background:#fb7299;box-shadow:0 4px 14px rgba(251,114,153,0.4);">🎬 在哔哩哔哩观看</button>
+      <button class="btn btn-primary btn-block" style="background:#fb7299;box-shadow:0 4px 14px rgba(251,114,153,0.4);">🎬 在哔哩哔哩搜索</button>
     </a>
     <div class="modal-btn-row">
-      <button class="btn btn-outline btn-sm" style="flex:1;" onclick="closeModal()">关闭</button>
-      <button class="btn btn-primary btn-sm" style="flex:1;" id="movieDoneBtn" onclick="completeMovie(${idx})">✅ 已看完，划掉</button>
+      <button class="btn btn-outline btn-sm" style="flex:1;" onclick="deleteMovie(${idx});closeModal()">🗑️ 删除</button>
+      <button class="btn btn-primary btn-sm" style="flex:1;" onclick="completeMovie(${idx})">${m.watched ? '🔄 标为未看' : '✅ 已看完'}</button>
     </div>
   `;
   document.getElementById('modalOverlay').style.display = 'flex';
 }
 
 function completeMovie(idx) {
-  const card = document.getElementById('movieCard' + idx);
-  if (card) {
-    card.style.opacity = '0.45';
-    card.querySelector('.mc-title').style.textDecoration = 'line-through';
-  }
-  showToast('🎬 已标记为已看完！');
+  const m = state.movieList[idx];
+  m.watched = !m.watched;
+  renderMovieList();
+  showToast(m.watched ? '🎬 已标记为已看完！' : '🔄 已标为未看');
   closeModal();
 }
 
@@ -2756,6 +2885,9 @@ function toggleMoneyTask(n) {
 // ========== 初始化 ==========
 initDriveQuestions();
 renderTodos();
+// 初始化电影列表
+state.movieList = loadMovies();
+renderMovieList();
 updateAllGridStatus();
 
 // ========== 从存档恢复 UI 状态 ==========
@@ -2828,6 +2960,7 @@ function restoreUI() {
   const engStage = state.engStage || 'basic';
   const engTag = document.querySelector(`[data-stage="${engStage}"]`);
   if (engTag) switchEngStage(engStage, engTag);
+  renderEngCustomTasks();
 
   // 8. 恢复驾考状态
   document.querySelectorAll('.drive-category-tabs .tag').forEach(t => {
